@@ -14,7 +14,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(setGame)
+        let card1 = Card(shape: .squiggle, color: .red, number: .three, shading: .outlined)
+        let card2 = Card(shape: .diamond, color: .green, number: .three, shading: .solid)
+        let card3 = Card(shape: .oval, color: .purple, number: .three, shading: .striped)
+        let card4 = Card(shape: .squiggle, color: .red, number: .three, shading: .outlined)
+        let card5 = Card(shape: .diamond, color: .green, number: .three, shading: .solid)
+        let card6 = Card(shape: .squiggle, color: .purple, number: .three, shading: .striped)
+        print(setGame.isASet(card1, card2, card3))
+        print(setGame.isASet(card4, card5, card6))
     }
 
 

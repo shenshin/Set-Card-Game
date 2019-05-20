@@ -9,6 +9,14 @@
 import Foundation
 struct Card {
     let features: Features
+    var matrix: [Int] {
+        get {
+            return [features.shape.rawValue,
+                    features.color.rawValue,
+                    features.number.rawValue,
+                    features.shading.rawValue]
+        }
+    }
 
     init(shape: Features.Shape, color: Features.Color, number: Features.Number, shading: Features.Shading) {
         self.features = Features(shape: shape, color: color, number: number, shading: shading)
@@ -29,6 +37,7 @@ struct Features {
     let color: Color
     let number: Number
     let shading: Shading
+
     init(shape: Shape, color: Color, number: Number, shading: Shading) {
         self.shape = shape
         self.color = color
@@ -46,16 +55,16 @@ struct Features {
                   number: Number.init(rawValue: features[2])!,
                   shading: Shading.init(rawValue: features[3])!)
     }
-    enum Shape: Int {
+    enum Shape: Int, CaseIterable {
         case oval = 1, squiggle, diamond
     }
-    enum Color: Int {
+    enum Color: Int, CaseIterable {
         case red = 1, purple, green
     }
-    enum Number: Int {
+    enum Number: Int, CaseIterable {
         case one = 1, two, three
     }
-    enum Shading: Int {
+    enum Shading: Int, CaseIterable {
         case solid = 1, striped, outlined
     }
 }
