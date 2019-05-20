@@ -13,6 +13,7 @@
 		7814AE1A229234D100346673 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7814AE19229234D100346673 /* Assets.xcassets */; };
 		7814AE1D229234D100346673 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7814AE1B229234D100346673 /* LaunchScreen.storyboard */; };
 		7814AE25229245FF00346673 /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE24229245FF00346673 /* SetGame.swift */; };
+		7814AE2B2292484200346673 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE2A2292484200346673 /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		7814AE1C229234D100346673 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7814AE1E229234D100346673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7814AE24229245FF00346673 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		7814AE2A2292484200346673 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				7814AE24229245FF00346673 /* SetGame.swift */,
+				7814AE2A2292484200346673 /* Card.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 				7814AE15229234CB00346673 /* ViewController.swift in Sources */,
 				7814AE25229245FF00346673 /* SetGame.swift in Sources */,
 				7814AE13229234CB00346673 /* AppDelegate.swift in Sources */,
+				7814AE2B2292484200346673 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
