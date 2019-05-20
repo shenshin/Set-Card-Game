@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let setGame: SetGame = SetGame()
+    var setGame: SetGame = SetGame()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +20,16 @@ class ViewController: UIViewController {
         let card4 = Card(shape: .squiggle, color: .red, number: .three, shading: .outlined)
         let card5 = Card(shape: .diamond, color: .green, number: .three, shading: .solid)
         let card6 = Card(shape: .squiggle, color: .purple, number: .three, shading: .striped)
-        print(setGame.isASet(card1, card2, card3))
-        print(setGame.isASet(card4, card5, card6))
+
+        _ = setGame.isASet([card1, card2, card3])
+        _ = setGame.isASet([card4, card5, card6])
+        
+        while let threeCards = setGame.give3moreCards() {
+            _ = setGame.isASet(threeCards)
+        }
+        for card in setGame.matchedCards {
+            print(card)
+        }
     }
 
 

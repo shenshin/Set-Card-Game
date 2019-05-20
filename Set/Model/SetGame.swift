@@ -9,10 +9,11 @@
 import Foundation
 
 struct SetGame {
-    var deck: [Card] = []
+    private(set) var deck: [Card] = []
+    private(set) var matchedCards: [Card] = []
+
     init(){
         resetDeck()
-        
     }
     //если метод возвращает nil то колода пустая
     mutating func give3moreCards() -> [Card]? {
@@ -26,30 +27,24 @@ struct SetGame {
             return nil
         }
     }
-    func isASet(_ cards: Card...) -> Bool {
+    mutating func isASet(_ cards: [Card]) -> Bool {
         assert(cards.count == 3, "set should consist of 3 cards")
-        var matched = false
-        let card1 = cards[0].features
-        let card2 = cards[1].features
-        let card3 = cards[2].features
-
-        let shapeMatch = card1.shape == card2.shape && card2.shape == card3.shape
-        let shapeMissmatch = card1.shape != card2.shape && card2.shape != card3.shape && card3.shape != card1.shape
-        let colorMatch = card1.color == card2.color && card2.color == card3.color
-        let colorMissmatch = card1.color != card2.color && card2.color != card3.color && card3.color != card1.color
-        let numberMatch = card1.number == card2.number && card2.number == card3.number
-        let numberMissmatch = card1.number != card2.number && card2.number != card3.number && card3.number != card1.number
-        let shadingMatch = card1.shading == card2.shading && card2.shading == card3.shading
-        let shadingMissmatch = card1.shading != card2.shading && card2.shading != card3.shading && card3.shading != card1.shading
-        if (shapeMatch || shapeMissmatch) && (colorMatch || colorMissmatch) && (numberMatch || numberMissmatch) &&  (shadingMatch || shadingMissmatch) {
-            matched = true
+        let matrix1 = cards[0].matrix, matrix2 = cards[1].matrix, matrix3 = cards[2].matrix
+        var features: [Bool] = []
+        for value in matrix1.indices {
+            let matched = (matrix1[value] == matrix2[value] && matrix2[value] == matrix3[value]) ||
+            (matrix1[value] != matrix2[value] && matrix2[value] != matrix3[value] && matrix1[value] != matrix3[value])
+            features.append(matched)
         }
-        return matched
+        let result = features.reduce(features[0]) {$0 && $1}
+        if result {matchedCards.append(contentsOf: cards)}
+        return result
     }
     private mutating func resetDeck() {
         deck.removeAll()
         /// Не спрашивайте меня как это работает. Это магия.
         func makeLoop(values: [Int], array: [Int] = [], counter: Int = 0) {
+            //в игре 4 параметра: форма, цвет, число, заливка - поэтому счётчик работает до 4-х
             if counter == 4 {
                 deck.append(Card(array))
                 return
@@ -58,8 +53,8 @@ struct SetGame {
                 makeLoop(values: values, array: array + [value], counter: counter + 1)
             }
         }
-        makeLoop(values: [1,2,3])
-        //deck.shuffle()
+        makeLoop(values: Features.rawValues)
+        deck.shuffle()
     }
 }
 extension SetGame: CustomStringConvertible {

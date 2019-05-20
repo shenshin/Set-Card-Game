@@ -37,6 +37,10 @@ struct Features {
     let color: Color
     let number: Number
     let shading: Shading
+    
+    static var rawValues: [Int] {
+        return [Shape.oval.rawValue, Shape.squiggle.rawValue, Shape.diamond.rawValue]
+    }
 
     init(shape: Shape, color: Color, number: Number, shading: Shading) {
         self.shape = shape
@@ -47,7 +51,7 @@ struct Features {
     init(features: [Int]) {
         assert({()->Bool in
             if features.count != 4 {return false}
-            for number in features where ![1,2,3].contains(number) {return false}
+            for number in features where !Features.rawValues.contains(number) {return false}
             return true
         }(), "incorrect features")
         self.init(shape: Shape.init(rawValue: features[0])!,
@@ -56,20 +60,20 @@ struct Features {
                   shading: Shading.init(rawValue: features[3])!)
     }
     enum Shape: Int, CaseIterable {
-        case oval = 1, squiggle, diamond
+        case oval, squiggle, diamond
     }
     enum Color: Int, CaseIterable {
-        case red = 1, purple, green
+        case red, purple, green
     }
     enum Number: Int, CaseIterable {
-        case one = 1, two, three
+        case one, two, three
     }
     enum Shading: Int, CaseIterable {
-        case solid = 1, striped, outlined
+        case solid, striped, outlined
     }
 }
 extension Features: CustomStringConvertible {
     var description: String {
-        return "shape: \(shape.rawValue), color: \(color.rawValue), number: \(number.rawValue), shading: \(shading.rawValue)"
+        return "shape: \(shape), color: \(color), number: \(number), shading: \(shading)"
     }
 }
