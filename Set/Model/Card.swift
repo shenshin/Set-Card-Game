@@ -26,9 +26,17 @@ struct Card {
         self.features = Features(features: features)
     }
 }
+extension Card: Hashable {
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(matrix)
+    }
+}
 extension Card: CustomStringConvertible {
     var description: String {
-        return "\(features)"
+        return "{\(features)}"
     }
 }
 

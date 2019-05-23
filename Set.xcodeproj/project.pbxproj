@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7814AE13229234CB00346673 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE12229234CB00346673 /* AppDelegate.swift */; };
-		7814AE15229234CB00346673 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE14229234CB00346673 /* ViewController.swift */; };
+		7814AE15229234CB00346673 /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE14229234CB00346673 /* SetViewController.swift */; };
 		7814AE18229234CB00346673 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7814AE16229234CB00346673 /* Main.storyboard */; };
 		7814AE1A229234D100346673 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7814AE19229234D100346673 /* Assets.xcassets */; };
 		7814AE1D229234D100346673 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7814AE1B229234D100346673 /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 /* Begin PBXFileReference section */
 		7814AE0F229234CB00346673 /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7814AE12229234CB00346673 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7814AE14229234CB00346673 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7814AE14229234CB00346673 /* SetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
 		7814AE17229234CB00346673 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7814AE19229234D100346673 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7814AE1C229234D100346673 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		7814AE272292462400346673 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7814AE14229234CB00346673 /* ViewController.swift */,
+				7814AE14229234CB00346673 /* SetViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -134,6 +134,7 @@
 				TargetAttributes = {
 					7814AE0E229234CB00346673 = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -173,7 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7814AE15229234CB00346673 /* ViewController.swift in Sources */,
+				7814AE15229234CB00346673 /* SetViewController.swift in Sources */,
 				7814AE25229245FF00346673 /* SetGame.swift in Sources */,
 				7814AE13229234CB00346673 /* AppDelegate.swift in Sources */,
 				7814AE2B2292484200346673 /* Card.swift in Sources */,
@@ -325,6 +326,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -343,6 +345,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
