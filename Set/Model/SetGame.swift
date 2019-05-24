@@ -22,18 +22,13 @@ extension Array {
         }
     }
 }
-protocol SetGameDelegate: class {
-    func cardsChecked(cards: [Card], isSet: Bool)
-    func gameOver()
-}
 
 struct SetGame {
     private(set) var deck: [Card] = [] //карты, которые ещё не разыгрывались
     private(set) var matched: [Card] = [] //карты, которые уже были угаданы правильно как сет
     private(set) var inGame: [Card] = [] //карты, которые находятся в данный момент в игре, и из них производится выбор
     private(set) var chosen: [Card] = [] //карты, выбранные, но пока не угаданные как сет
-
-    weak var delegate: SetGameDelegate?
+    private(set) var chosenInGameIndices: [Int] = []
 
     init(){
         startNewGame()
@@ -44,7 +39,8 @@ struct SetGame {
         matched.removeAll()
         inGame.removeAll()
         chosen.removeAll()
-        inGame = deck.extractLast(24)!
+        chosenInGameIndices.removeAll()
+        inGame = deck.extractLast(12)!
     }
 
     ///Вынимает очередные 3 карты из колоды `deck[]` и помещает их в игру `inGame[]`
@@ -57,40 +53,14 @@ struct SetGame {
             return false
         }
     }
-    mutating func chooseCard(_ card: Card) -> ([Card], Bool)? {
-        if chosen.count < 3 {
-            chosen.append(card)
-            if chosen.count == 3 {
-                if isASet(chosen) {
-                    return (chosen, true)
-                } else {
-                    return (chosen, false)
-                }
-            }
-        }
-        return nil
+    mutating func chooseCard(at inGameIndex: Int) {
+        chosenInGameIndices.append(inGameIndex)
+        chosen.append(inGame[inGameIndex])
     }
-    mutating func chooseCard(_ card: Card) {
-        if chosen.count < 3 {
-            chosen.append(card)
-            if chosen.count == 3 {
-                if isASet(chosen) {
-                    delegate?.cardsChecked(cards: chosen, isSet: true)
-                    removeFromGame(chosen)
-                    if !get3MoreCards() {
-                        delegate?.gameOver()
-                        startNewGame()
-                    } else {
-                        print("Раздаю ещё три карты")
-                        print("В колоде осталось \(deck.count) карт")
-                    }
-                } else {
-                    delegate?.cardsChecked(cards: chosen, isSet: false)
-                }
-                chosen.removeAll()
-            }
-        }
-    }
+    
+    
+    
+    
     ///Проверяет находятся ли карты в игре, и если да, то удаляет их из игры и перемещает в угаданные
     mutating func removeFromGame(_ cards: [Card]) {
         for card in cards {
