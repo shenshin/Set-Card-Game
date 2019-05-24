@@ -44,8 +44,7 @@ struct SetGame {
         matched.removeAll()
         inGame.removeAll()
         chosen.removeAll()
-        inGame = deck.extractLast(12)!
-        print("В колоде осталось \(deck.count) карт")
+        inGame = deck.extractLast(24)!
     }
 
     ///Вынимает очередные 3 карты из колоды `deck[]` и помещает их в игру `inGame[]`
@@ -130,6 +129,6 @@ struct SetGame {
         }
         makeLoop(values: Features.rawValues)
         assert(deck.count == 81, "Deck was not created")
-        //deck.shuffle()
+        deck.shuffle()
     }
 }
