@@ -14,6 +14,7 @@
 		7814AE1D229234D100346673 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7814AE1B229234D100346673 /* LaunchScreen.storyboard */; };
 		7814AE25229245FF00346673 /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE24229245FF00346673 /* SetGame.swift */; };
 		7814AE2B2292484200346673 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE2A2292484200346673 /* Card.swift */; };
+		8832B012229910450064463A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832B011229910450064463A /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7814AE1E229234D100346673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7814AE24229245FF00346673 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		7814AE2A2292484200346673 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		8832B011229910450064463A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			children = (
 				7814AE24229245FF00346673 /* SetGame.swift */,
 				7814AE2A2292484200346673 /* Card.swift */,
+				8832B011229910450064463A /* Extensions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8832B012229910450064463A /* Extensions.swift in Sources */,
 				7814AE15229234CB00346673 /* SetViewController.swift in Sources */,
 				7814AE25229245FF00346673 /* SetGame.swift in Sources */,
 				7814AE13229234CB00346673 /* AppDelegate.swift in Sources */,
@@ -333,7 +337,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shenshin.Set;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -352,7 +356,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shenshin.Set;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

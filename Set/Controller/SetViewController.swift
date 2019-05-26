@@ -23,7 +23,7 @@ class SetViewController: UIViewController {
     }
     @IBAction func cardButtonPressed(_ sender: UIButton) {
         guard let index = cardButtons.firstIndex(of: sender) else {return}
-        setGame.chooseCard(at: index)
+        _ = setGame.chooseCard(setGame.inGame[index])
         updateViewsFromModel()
     }
     
@@ -34,28 +34,36 @@ class SetViewController: UIViewController {
     func updateViewsFromModel() {
         if cardButtons != nil {
             for index in cardButtons.indices {
+                let button = cardButtons[index]
                 if index < setGame.inGame.count {
-                    cardButtons[index].isEnabled = true
-                    cardButtons[index].backgroundColor = #colorLiteral(red: 0.8391417861, green: 0.8392631412, blue: 0.8391153216, alpha: 1)
+                    button.isEnabled = true
+                    button.backgroundColor = #colorLiteral(red: 0.9085996184, green: 0.9198168977, blue: 0.9198168977, alpha: 1)
                     let card = setGame.inGame[index]
-                    cardButtons[index].setAttributedTitle(drawSymbol(shape: card.features.shape, color: card.features.color, number: card.features.number, shading: card.features.shading), for: .normal)
-                    
-                    if setGame.chosenInGameIndices.contains(index) {
-                        cardButtons[index].backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+                    button.setAttributedTitle(drawSymbol(shape: card.features.shape, color: card.features.color, number: card.features.number, shading: card.features.shading), for: .normal)
+                    if let matched = setGame.matched {
+                        if setGame.chosen.contains(card) && matched {
+                            button.backgroundColor = #colorLiteral(red: 0.8394593306, green: 1, blue: 0.8707115997, alpha: 1)
+                        } else if setGame.chosen.contains(card) && !matched {
+                            button.backgroundColor = #colorLiteral(red: 0.9879103513, green: 0.8457199425, blue: 0.916779121, alpha: 1)
+                        }
+                    } else {
+                        if setGame.chosen.contains(card) {
+                            button.backgroundColor = #colorLiteral(red: 1, green: 0.960983851, blue: 0.8528137015, alpha: 1)
+                        }
                     }
-                    
                 } else {
-                    cardButtons[index].isEnabled = false
-                    cardButtons[index].backgroundColor = UIColor.clear
-                    cardButtons[index].setAttributedTitle(nil, for: .normal)
-                    cardButtons[index].setTitle(nil, for: .normal)
+                    button.isEnabled = false
+                    button.backgroundColor = UIColor.clear
+                    button.setAttributedTitle(nil, for: .normal)
+                    button.setTitle(nil, for: .normal)
                 }
             }
         }
     }
     
     @IBAction func give3MoreCarsButtonPressed(_ sender: UIButton) {
-        if setGame.get3MoreCards() {
+        if setGame.inGame.count <= 21 {
+            setGame.get3MoreCards()
             updateViewsFromModel()
         }
     }

@@ -17,14 +17,20 @@ struct Card {
                     features.shading.rawValue]
         }
     }
-
+    ///Инициализатор для ручного создания карты
+    ///- Parameter shape: Форма символа на карте
+    ///- Parameter color: Цвет символа на карте
+    ///- Parameter number: Колличество символов на карте
+    ///- Parameter shading: Штриховка символа (без заливки, заштрихованный, залитый)
     init(shape: Features.Shape, color: Features.Color, number: Features.Number, shading: Features.Shading) {
         self.features = Features(shape: shape, color: color, number: number, shading: shading)
     }
-
+    ///Инициализатор для автоматического создания карты. Предназначен для метода SetGame.resetDeck() или аналогичных целей
+    ///- Parameter features: Массив из четырёх целых чисел от 1 до 3, соответствующих трём возможным значениям четырёх параметров каждой карты
     init(_ features: [Int]) {
         self.features = Features(features: features)
     }
+    
 }
 extension Card: Hashable {
     static func == (lhs: Card, rhs: Card) -> Bool {
@@ -36,7 +42,7 @@ extension Card: Hashable {
 }
 extension Card: CustomStringConvertible {
     var description: String {
-        return "{\(features)}"
+        return "{\(features)}\n"
     }
 }
 
@@ -80,6 +86,7 @@ struct Features {
         case solid, striped, outlined
     }
 }
+
 extension Features: CustomStringConvertible {
     var description: String {
         return "shape: \(shape), color: \(color), number: \(number), shading: \(shading)"

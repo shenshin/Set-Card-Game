@@ -8,27 +8,15 @@
 
 import Foundation
 
-extension Array {
-    ///Удаляет и возвращает k последних элементов массива
-    ///- Parameter k: число последних элементов массива
-    ///- Returns: новый массив из k последних элементов исходного массива
-    mutating func extractLast(_ k: Int) -> [Element]? {
-        if k > count {
-            return nil
-        } else {
-            let trailing = suffix(k) //сохраняю последние k элементов массива
-            removeLast(k) //удаляю их из исходного массива
-            return Array(trailing) //возвращаю массив из сохраненных элементов
-        }
-    }
-}
-
 struct SetGame {
-    private(set) var deck: [Card] = [] //карты, которые ещё не разыгрывались
-    private(set) var matched: [Card] = [] //карты, которые уже были угаданы правильно как сет
-    private(set) var inGame: [Card] = [] //карты, которые находятся в данный момент в игре, и из них производится выбор
-    private(set) var chosen: [Card] = [] //карты, выбранные, но пока не угаданные как сет
-    private(set) var chosenInGameIndices: [Int] = []
+    ///Карты, которые ещё не разыгрывались
+    private(set) var deck: [Card] = []
+    ///Карты, которые находятся в данный момент в игре, и из них производится выбор
+    private(set) var inGame: [Card] = []
+    ///Карты, выбранные, но пока не угаданные как сет
+    private(set) var chosen: [Card] = []
+    ///Был ли угадан сет в предыдущем ходе?
+    private(set) var matched: Bool?
 
     init(){
         startNewGame()
@@ -36,46 +24,58 @@ struct SetGame {
 
     mutating func startNewGame() {
         resetDeck()
-        matched.removeAll()
         inGame.removeAll()
         chosen.removeAll()
-        chosenInGameIndices.removeAll()
         inGame = deck.extractLast(12)!
     }
 
     ///Вынимает очередные 3 карты из колоды `deck[]` и помещает их в игру `inGame[]`
     ///- Returns: `true` если удалось поместить 3 новые карты в `inGame[]` и `false` если этого сделать не удалось
-    mutating func get3MoreCards() -> Bool {
-        if let array = deck.extractLast(3) {
-            inGame.append(contentsOf: array)
-            return true
-        } else {
-            return false
-        }
-    }
-    mutating func chooseCard(at inGameIndex: Int) {
-        chosenInGameIndices.append(inGameIndex)
-        chosen.append(inGame[inGameIndex])
-    }
-    
-    
-    
-    
-    ///Проверяет находятся ли карты в игре, и если да, то удаляет их из игры и перемещает в угаданные
-    mutating func removeFromGame(_ cards: [Card]) {
-        for card in cards {
-            guard let index = inGame.firstIndex(of: card) else {fatalError("Card is not is the game")}
-            matched.append(inGame[index])
-            inGame.remove(at: index)
+    mutating func get3MoreCards() {
+        if inGame.count <= 21 {
+            if let array = deck.extractLast(3) {
+                inGame.append(contentsOf: array)
+            }
         }
     }
 
+    mutating func chooseCard(_ card: Card) {
+        assert(chosen.count <= 3, "The ammount of chosen cards is greater than possible")
+        //в предыдущем ходе не было попытки угадать сет
+        if matched == nil {
+            if chosen.contains(card) {
+                chosen.removeAll { $0 == card }
+            } else {
+                chosen.append(card)
+                if chosen.count == 3 {
+                    matched = isASet(chosen)
+                }
+            }
+        //в предыдущем ходе был угадан сет
+        } else if matched! {
+            let temp = chosen
+            chosen.forEach { match in inGame.removeAll { $0 == match } }
+            chosen.removeAll()
+            matched = nil
+            if !temp.contains(card) {
+                chosen.append(card)
+            }
+            get3MoreCards()
+        //в предыдущем ходе карты не составили сет
+        } else {
+            chosen.removeAll()
+            matched = nil
+            chosen.append(card)
+        }
+    }
+    
     ///Проверяет, являются ли карты `cards` сетом
-    func isASet(_ cards: [Card]) -> Bool {
+    private func isASet(_ cards: [Card]) -> Bool {
         assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
         let matrix1 = cards[0].matrix, matrix2 = cards[1].matrix, matrix3 = cards[2].matrix
+
         var features: [Bool] = []
-        for value in matrix1.indices {
+        for value in matrix1 {
             let matched = (matrix1[value] == matrix2[value] && matrix2[value] == matrix3[value]) ||
             (matrix1[value] != matrix2[value] && matrix2[value] != matrix3[value] && matrix1[value] != matrix3[value])
             features.append(matched)
