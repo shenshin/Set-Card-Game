@@ -37,6 +37,7 @@ struct SetGame {
         if inGame.count <= 21 {
             if let array = deck.extractLast(3) {
                 inGame.append(contentsOf: array)
+                updateModel()
             }
         }
     }
@@ -72,7 +73,6 @@ struct SetGame {
                 if !temp.contains(card) {
                     chosen.append(card)
                 }
-                //get3MoreCards()
             //если в предыдущем ходе карты не составили сет, то обнулить выбранные
             //карты и добавить переданную карту в выбранные
             } else {
@@ -83,11 +83,14 @@ struct SetGame {
         } else {
             //если в предыдущем ходе был угадан сет, но метод вызван без передачи
             //выбранной карты, то удалить удачно угаданные карты из игры
-            if matched != nil, matched!{
-                chosen.forEach { match in inGame.removeAll { $0 == match } }
+            if let match = matched {
+                if match {
+                    chosen.forEach { match in inGame.removeAll { $0 == match } }
+                    chosen.removeAll()
+                } else {
+                    chosen.removeAll()
+                }
             }
-            //и в любом случае, сбросить текущие выбранные карты
-            chosen.removeAll()
         }
     }
     ///Проверяет, являются ли карты `cards` сетом

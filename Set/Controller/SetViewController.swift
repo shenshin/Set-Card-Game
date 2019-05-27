@@ -15,29 +15,23 @@ class SetViewController: UIViewController {
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var give3MoreCardsButton: UIButton!
     
-    private var setGame: SetGame = SetGame()
+    private lazy var setGame: SetGame = SetGame()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
+        startNewGame()
     }
     @IBAction private func cardButtonPressed(_ sender: UIButton) {
         guard let index = cardButtons.firstIndex(of: sender) else {fatalError("Wrong card index")}
-        updateViews(with: setGame.inGame[index])
+        setGame.updateModel(setGame.inGame[index])
+        updateViewsFromModel()
     }
     
     func startNewGame() {
         setGame.startNewGame()
-        updateViews()
-    }
-    private func updateViews(with optionalCard: Card? = nil) {
-        if let card = optionalCard {
-            setGame.updateModel(card)
-        } else {
-            setGame.updateModel()
-        }
         updateViewsFromModel()
     }
+
     private func updateViewsFromModel() {
         if cardButtons != nil {
             for index in cardButtons.indices {
@@ -69,14 +63,8 @@ class SetViewController: UIViewController {
     }
     
     @IBAction private func give3MoreCarsButtonPressed(_ sender: UIButton) {
-        //если выбор карт ещё происходит, т.е. результата matched? ещё нет, то
-        //выдавать три новых карты из колоды
-        if setGame.matched == nil {
-            setGame.get3MoreCards()
-        //а если выбор трёх карт произведен, то в независимости от результата
-        //новых карт не выдавать, а просто обновить состояние модели
-        }
-        updateViews()
+        setGame.get3MoreCards()
+        updateViewsFromModel()
     }
     @IBAction private func startNewGameButtonPressed(_ sender: UIButton) {
         startNewGame()
