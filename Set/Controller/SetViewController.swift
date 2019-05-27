@@ -19,6 +19,7 @@ class SetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        give3MoreCardsButton.isHighlighted = true
         startNewGame()
     }
     @IBAction private func cardButtonPressed(_ sender: UIButton) {
@@ -34,6 +35,7 @@ class SetViewController: UIViewController {
 
     private func updateViewsFromModel() {
         if cardButtons != nil {
+            scoreLabel.text = "Score: \(setGame.score)"
             for index in cardButtons.indices {
                 let button = cardButtons[index]
                 if index < setGame.inGame.count {
@@ -59,6 +61,7 @@ class SetViewController: UIViewController {
                     button.setTitle(nil, for: .normal)
                 }
             }
+//            give3MoreCardsButton.isHighlighted = true
         }
     }
     

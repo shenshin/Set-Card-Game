@@ -19,6 +19,7 @@ struct SetGame {
     var matched: Bool? {
         return chosen.count == 3 ? isASet(chosen) ? true : false : nil
     }
+    private(set) var score: Int = 0
 
     init(){
         startNewGame()
@@ -28,6 +29,7 @@ struct SetGame {
         resetDeck()
         inGame.removeAll()
         chosen.removeAll()
+        score = 0
         inGame = deck.extractLast(12)!
     }
 
@@ -60,6 +62,7 @@ struct SetGame {
                 //а если не была выбрана, то добавить в выбранные
                 } else {
                     chosen.append(card)
+                    measureScore()
                 }
             //в предыдущем ходе был угадан сет
             } else if matched! {
@@ -93,6 +96,15 @@ struct SetGame {
             }
         }
     }
+    private mutating func measureScore() {
+        if chosen.count == 3 {
+            if isASet(chosen) {
+                score += 3
+            } else {
+                score -= 5
+            }
+        }
+    }
     ///Проверяет, являются ли карты `cards` сетом
     private func isASet(_ cards: [Card]) -> Bool {
         assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
@@ -123,6 +135,6 @@ struct SetGame {
         }
         makeLoop(values: Features.rawValues)
         assert(deck.count == 81, "Deck was not created")
-        //deck.shuffle()
+        deck.shuffle()
     }
 }
