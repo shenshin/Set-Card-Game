@@ -16,7 +16,9 @@ struct SetGame {
     ///Карты, выбранные, но пока не угаданные как сет
     private(set) var chosen: [Card] = []
     ///Был ли угадан сет в предыдущем ходе?
-    private(set) var matched: Bool?
+    var matched: Bool? {
+        return chosen.count == 3 ? isASet(chosen) ? true : false : nil
+    }
 
     init(){
         startNewGame()
@@ -38,37 +40,56 @@ struct SetGame {
             }
         }
     }
-
-    mutating func chooseCard(_ card: Card) {
+    ///Принимает по одной карте, выбираемые пользователем и формирует модель игры.
+    ///Если в параметре передаётся `nil`, то метод только обнуляет выбранные
+    ///на данный момент карты и, при удачно угаданном сете, удаляет выбранные карты
+    ///из игры.
+    ///- Parameter optionalCard: Новая карта, передаваемая модели на обработку, либо
+    ///`nil` если требуется просто обновить состояние модели, например,
+    ///после удачно или неудачно угаданного сета.
+    mutating func updateModel(_ optionalCard: Card? = nil) {
         assert(chosen.count <= 3, "The ammount of chosen cards is greater than possible")
-        //в предыдущем ходе не было попытки угадать сет
-        if matched == nil {
-            if chosen.contains(card) {
-                chosen.removeAll { $0 == card }
-            } else {
-                chosen.append(card)
-                if chosen.count == 3 {
-                    matched = isASet(chosen)
+        //если метод в аргументе получает карту
+        if let card = optionalCard {
+            //в предыдущем ходе не было попытки угадать сет
+            if matched == nil {
+                //если карта уже выбрана, удалить ее из выбранных
+                if chosen.contains(card) {
+                    chosen.removeAll { $0 == card }
+                //а если не была выбрана, то добавить в выбранные
+                } else {
+                    chosen.append(card)
                 }
-            }
-        //в предыдущем ходе был угадан сет
-        } else if matched! {
-            let temp = chosen
-            chosen.forEach { match in inGame.removeAll { $0 == match } }
-            chosen.removeAll()
-            matched = nil
-            if !temp.contains(card) {
+            //в предыдущем ходе был угадан сет
+            } else if matched! {
+                let temp = chosen
+                //из игры удаляются выбранные карты
+                chosen.forEach { match in inGame.removeAll { $0 == match } }
+                chosen.removeAll()
+                //если при вызове метода была передана новая карта, не входящая
+                //в уже угаданный сет, то она добавляется во вновь выбранные карты
+                //после их предшествующего обнуления
+                if !temp.contains(card) {
+                    chosen.append(card)
+                }
+                //get3MoreCards()
+            //если в предыдущем ходе карты не составили сет, то обнулить выбранные
+            //карты и добавить переданную карту в выбранные
+            } else {
+                chosen.removeAll()
                 chosen.append(card)
             }
-            get3MoreCards()
-        //в предыдущем ходе карты не составили сет
+        //Если в аргументе функции не была передана карта
         } else {
+            //если в предыдущем ходе был угадан сет, но метод вызван без передачи
+            //выбранной карты, то удалить удачно угаданные карты из игры
+            if matched != nil, matched!{
+                chosen.forEach { match in inGame.removeAll { $0 == match } }
+            }
+            //и в любом случае, сбросить текущие выбранные карты
             chosen.removeAll()
-            matched = nil
-            chosen.append(card)
         }
     }
-    
     ///Проверяет, являются ли карты `cards` сетом
     private func isASet(_ cards: [Card]) -> Bool {
         assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
@@ -99,6 +120,6 @@ struct SetGame {
         }
         makeLoop(values: Features.rawValues)
         assert(deck.count == 81, "Deck was not created")
-        deck.shuffle()
+        //deck.shuffle()
     }
 }

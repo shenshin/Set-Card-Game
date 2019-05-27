@@ -21,4 +21,9 @@ extension Array {
             return Array(trailing) //возвращаю массив из сохраненных элементов
         }
     }
+//    mutating func append(_ newOptional: Element?) {
+//        if let element = newOptional {
+//            self.append(element)
+//        }
+//    }
 }
