@@ -17,9 +17,18 @@ struct SetGame {
     private(set) var chosen: [Card] = []
     ///Был ли угадан сет в предыдущем ходе?
     var matched: Bool? {
+        defer {if chosen.count == 3 {print(chosen)}}
         return chosen.count == 3 ? isASet(chosen) ? true : false : nil
     }
     private(set) var score: Int = 0
+    var possibleSets: Int {
+        var sets: Int = 0
+        let combinations: [[Card]] = inGame.combinations(taking: 3, withRepetition: false)
+        for combination in combinations {
+            sets += isASet(combination) ? 1 : 0
+        }
+        return sets
+    }
 
     init(){
         startNewGame()
@@ -68,6 +77,7 @@ struct SetGame {
             } else if matched! {
                 let temp = chosen
                 //из игры удаляются выбранные карты
+                //inGame = inGame.filter {!chosen.contains($0)}
                 chosen.forEach { match in inGame.removeAll { $0 == match } }
                 chosen.removeAll()
                 //если при вызове метода была передана новая карта, не входящая
@@ -112,11 +122,13 @@ struct SetGame {
 
         var features: [Bool] = []
         for value in matrix1 {
-            let matched = (matrix1[value] == matrix2[value] && matrix2[value] == matrix3[value]) ||
+            let matched = (matrix1[value] == matrix2[value] && matrix2[value] == matrix3[value] && matrix1[value] == matrix3[value]) ||
             (matrix1[value] != matrix2[value] && matrix2[value] != matrix3[value] && matrix1[value] != matrix3[value])
             features.append(matched)
         }
+        print(features)
         let result = features.reduce(features[0]) {$0 && $1}
+        print(result)
         return result
     }
 
@@ -135,6 +147,6 @@ struct SetGame {
         }
         makeLoop(values: Features.rawValues)
         assert(deck.count == 81, "Deck was not created")
-        deck.shuffle()
+        ///deck.shuffle()
     }
 }

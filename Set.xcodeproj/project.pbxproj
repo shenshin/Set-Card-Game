@@ -27,6 +27,7 @@
 		7814AE1E229234D100346673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7814AE24229245FF00346673 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		7814AE2A2292484200346673 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		882E0452229D38C900B76B61 /* demo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = demo.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8832B011229910450064463A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +73,7 @@
 		7814AE262292460900346673 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				882E0452229D38C900B76B61 /* demo.playground */,
 				7814AE24229245FF00346673 /* SetGame.swift */,
 				7814AE2A2292484200346673 /* Card.swift */,
 				8832B011229910450064463A /* Extensions.swift */,
