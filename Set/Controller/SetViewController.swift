@@ -19,8 +19,8 @@ class SetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //give3MoreCardsButton.isHighlighted = true
         startNewGame()
+        //give3MoreCardsButton.isHighlighted = true
     }
     @IBAction private func cardButtonPressed(_ sender: UIButton) {
         guard let index = cardButtons.firstIndex(of: sender) else {fatalError("Wrong card index")}

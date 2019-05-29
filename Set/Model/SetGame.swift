@@ -17,21 +17,15 @@ struct SetGame {
     private(set) var chosen: [Card] = []
     ///Был ли угадан сет в предыдущем ходе?
     var matched: Bool? {
-        defer {if chosen.count == 3 {print(chosen)}}
         return chosen.count == 3 ? isASet(chosen) ? true : false : nil
     }
     private(set) var score: Int = 0
     var possibleSets: Int {
-        var sets: Int = 0
-        let combinations: [[Card]] = inGame.combinations(taking: 3, withRepetition: false)
-        for combination in combinations {
-            sets += isASet(combination) ? 1 : 0
-        }
-        return sets
+        return inGame.combinations(taking: 3).reduce(into: 0){$0 += isASet($1) ? 1 : 0}
     }
 
     init(){
-        startNewGame()
+        //startNewGame()
     }
 
     mutating func startNewGame() {
@@ -45,11 +39,11 @@ struct SetGame {
     ///Вынимает очередные 3 карты из колоды `deck[]` и помещает их в игру `inGame[]`
     ///- Returns: `true` если удалось поместить 3 новые карты в `inGame[]` и `false` если этого сделать не удалось
     mutating func get3MoreCards() {
-        if inGame.count <= 21 {
-            if let array = deck.extractLast(3) {
-                inGame.append(contentsOf: array)
-                updateModel()
-            }
+        //три карты выдаются только если их меньше 21 или в прошлом ходе
+        //осуществлено угадывание сета и при этом в колоде есть карты
+        if inGame.count <= 21 || (matched != nil && matched!), let array = deck.extractLast(3) {
+            inGame.append(contentsOf: array)
+            updateModel()
         }
     }
     ///Принимает по одной карте, выбираемые пользователем и формирует модель игры.
@@ -116,37 +110,63 @@ struct SetGame {
         }
     }
     ///Проверяет, являются ли карты `cards` сетом
-    private func isASet(_ cards: [Card]) -> Bool {
-        assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
-        let matrix1 = cards[0].matrix, matrix2 = cards[1].matrix, matrix3 = cards[2].matrix
-
-        var features: [Bool] = []
-        for value in matrix1 {
-            let matched = (matrix1[value] == matrix2[value] && matrix2[value] == matrix3[value] && matrix1[value] == matrix3[value]) ||
-            (matrix1[value] != matrix2[value] && matrix2[value] != matrix3[value] && matrix1[value] != matrix3[value])
-            features.append(matched)
+//    func isASet(_ cards: [Card]) -> Bool {
+//        assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
+//        let matrix1 = cards[0].matrix, matrix2 = cards[1].matrix, matrix3 = cards[2].matrix
+//
+//        var features: [Bool] = []
+//        for value in matrix1 {
+//            let matched = (matrix1[value] == matrix2[value] && matrix2[value] == matrix3[value] && matrix1[value] == matrix3[value]) ||
+//            (matrix1[value] != matrix2[value] && matrix2[value] != matrix3[value] && matrix1[value] != matrix3[value])
+//            features.append(matched)
+//        }
+//        //print(features)
+//        let result = features.reduce(features[0]) {$0 && $1}
+//        //print(result)
+//        return result
+//    }
+    func isASet(_ cards: [Card]) -> Bool {
+        assert(cards.count == 3, "set should consist of 3 cards")
+        var matched = false
+        let card1 = cards[0].features
+        let card2 = cards[1].features
+        let card3 = cards[2].features
+        
+        let shapeMatch = card1.shape == card2.shape && card2.shape == card3.shape
+        let shapeMissmatch = card1.shape != card2.shape && card2.shape != card3.shape && card3.shape != card1.shape
+        let colorMatch = card1.color == card2.color && card2.color == card3.color
+        let colorMissmatch = card1.color != card2.color && card2.color != card3.color && card3.color != card1.color
+        let numberMatch = card1.number == card2.number && card2.number == card3.number
+        let numberMissmatch = card1.number != card2.number && card2.number != card3.number && card3.number != card1.number
+        let shadingMatch = card1.shading == card2.shading && card2.shading == card3.shading
+        let shadingMissmatch = card1.shading != card2.shading && card2.shading != card3.shading && card3.shading != card1.shading
+        if (shapeMatch || shapeMissmatch) && (colorMatch || colorMissmatch) && (numberMatch || numberMissmatch) &&  (shadingMatch || shadingMissmatch) {
+            matched = true
         }
-        print(features)
-        let result = features.reduce(features[0]) {$0 && $1}
-        print(result)
-        return result
+        return matched
     }
 
     private mutating func resetDeck() {
         deck.removeAll()
-        /// Не спрашивайте меня как это работает. Это магия.
-        func makeLoop(values: [Int], array: [Int] = [], counter: Int = 0) {
-            //в игре 4 параметра: форма, цвет, число, заливка - поэтому счётчик работает до 4-х
-            if counter == 4 {
-                deck.append(Card(array))
-                return
-            }
-            for value in values {
-                makeLoop(values: values, array: array + [value], counter: counter + 1)
-            }
-        }
-        makeLoop(values: Features.rawValues)
-        assert(deck.count == 81, "Deck was not created")
-        ///deck.shuffle()
+        deck = Combinatorics.permutationsWithRepetitionFrom(Features.rawValues, taking: 4).map{Card($0)}
+        deck.shuffle()
     }
 }
+
+
+
+//        // Моя собственная версия алгоритма перестановок с повторениями.
+//        // Реализация аналогична выполненной в struct Combinatorics
+//        func makeLoop(values: [Int], array: [Int] = [], counter: Int = 0) {
+//            //в игре 4 параметра: форма, цвет, число, заливка - поэтому счётчик работает до 4-х
+//            if counter == 4 {
+//                deck.append(Card(array))
+//                return
+//            }
+//            for value in values {
+//                makeLoop(values: values, array: array + [value], counter: counter + 1)
+//            }
+//        }
+//        makeLoop(values: Features.rawValues)
+//        assert(deck.count == 81, "Deck was not created")
+//        deck.shuffle()
