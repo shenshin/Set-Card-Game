@@ -56,11 +56,13 @@ struct SetGame {
                 //если карта уже выбрана, удалить ее из выбранных
                 if chosen.contains(card) {
                     chosen.removeAll { $0 == card }
-                    measureScore()
+                    score -= 1 // штраф за снятие выбора с карты
                 //а если не была выбрана, то добавить в выбранные
                 } else {
                     chosen.append(card)
-                    measureScore()
+                    if chosen.count == 3 {
+                        score += isASet(chosen) ? 3 : -5 //начисление очков в счёт
+                    }
                 }
             //в предыдущем ходе был угадан сет
             } else if matched! {
@@ -95,17 +97,7 @@ struct SetGame {
             }
         }
     }
-    private mutating func measureScore() {
-        if chosen.count == 3 {
-            if isASet(chosen) {
-                score += 3
-            } else {
-                score -= 5
-            }
-        } else {
-            score -= 1
-        }
-    }
+
     ///Проверяет, являются ли карты `cards` сетом
 //    func isASet(_ cards: [Card]) -> Bool {
 //        assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
