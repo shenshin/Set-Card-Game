@@ -24,10 +24,6 @@ struct SetGame {
         return inGame.combinations(taking: 3).reduce(into: 0){$0 += isASet($1) ? 1 : 0}
     }
 
-    init(){
-        //startNewGame()
-    }
-
     mutating func startNewGame() {
         resetDeck()
         inGame.removeAll()
@@ -39,9 +35,7 @@ struct SetGame {
     ///Вынимает очередные 3 карты из колоды `deck[]` и помещает их в игру `inGame[]`
     ///- Returns: `true` если удалось поместить 3 новые карты в `inGame[]` и `false` если этого сделать не удалось
     mutating func get3MoreCards() {
-        //три карты выдаются только если их меньше 21 или в прошлом ходе
-        //осуществлено угадывание сета и при этом в колоде есть карты
-        if inGame.count <= 21 || (matched != nil && matched!), let array = deck.extractLast(3) {
+        if let array = deck.extractLast(3) {
             inGame.append(contentsOf: array)
             updateModel()
         }
@@ -62,6 +56,7 @@ struct SetGame {
                 //если карта уже выбрана, удалить ее из выбранных
                 if chosen.contains(card) {
                     chosen.removeAll { $0 == card }
+                    measureScore()
                 //а если не была выбрана, то добавить в выбранные
                 } else {
                     chosen.append(card)
@@ -107,23 +102,16 @@ struct SetGame {
             } else {
                 score -= 5
             }
+        } else {
+            score -= 1
         }
     }
     ///Проверяет, являются ли карты `cards` сетом
 //    func isASet(_ cards: [Card]) -> Bool {
 //        assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
-//        let matrix1 = cards[0].matrix, matrix2 = cards[1].matrix, matrix3 = cards[2].matrix
-//
-//        var features: [Bool] = []
-//        for value in matrix1 {
-//            let matched = (matrix1[value] == matrix2[value] && matrix2[value] == matrix3[value] && matrix1[value] == matrix3[value]) ||
-//            (matrix1[value] != matrix2[value] && matrix2[value] != matrix3[value] && matrix1[value] != matrix3[value])
-//            features.append(matched)
+//        return cards.reduce(into: true) { (result, card) in
+//            card.features.forEach()
 //        }
-//        //print(features)
-//        let result = features.reduce(features[0]) {$0 && $1}
-//        //print(result)
-//        return result
 //    }
     func isASet(_ cards: [Card]) -> Bool {
         assert(cards.count == 3, "set should consist of 3 cards")
@@ -131,7 +119,7 @@ struct SetGame {
         let card1 = cards[0].features
         let card2 = cards[1].features
         let card3 = cards[2].features
-        
+
         let shapeMatch = card1.shape == card2.shape && card2.shape == card3.shape
         let shapeMissmatch = card1.shape != card2.shape && card2.shape != card3.shape && card3.shape != card1.shape
         let colorMatch = card1.color == card2.color && card2.color == card3.color

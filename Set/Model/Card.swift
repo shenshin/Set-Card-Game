@@ -51,7 +51,7 @@ struct Features {
     let color: Color
     let number: Number
     let shading: Shading
-    
+    ///Цифровые значения для параметров. Определяются по значениям для enum Shape
     static var rawValues: [Int] {
         return [Shape.oval.rawValue, Shape.squiggle.rawValue, Shape.diamond.rawValue]
     }

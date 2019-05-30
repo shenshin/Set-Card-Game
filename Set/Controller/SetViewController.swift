@@ -10,32 +10,46 @@ import UIKit
 
 class SetViewController: UIViewController {
     
-    
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var give3MoreCardsButton: UIButton!
-    
+
     private lazy var setGame: SetGame = SetGame()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         startNewGame()
-        //give3MoreCardsButton.isHighlighted = true
     }
-    @IBAction private func cardButtonPressed(_ sender: UIButton) {
-        guard let index = cardButtons.firstIndex(of: sender) else {fatalError("Wrong card index")}
-        setGame.updateModel(setGame.inGame[index])
-        updateViewsFromModel()
-    }
-    
+
     func startNewGame() {
         setGame.startNewGame()
         updateViewsFromModel()
     }
 
+    @IBAction private func cardButtonPressed(_ sender: UIButton) {
+        guard let index = cardButtons.firstIndex(of: sender) else {fatalError("Wrong card index")}
+        setGame.updateModel(setGame.inGame[index])
+        updateViewsFromModel()
+    }
+    @IBAction private func give3MoreCarsButtonPressed(_ sender: UIButton) {
+        setGame.get3MoreCards()
+        updateViewsFromModel()
+    }
+    @IBAction private func startNewGameButtonPressed(_ sender: UIButton) {
+        startNewGame()
+    }
+
     private func updateViewsFromModel() {
-        if cardButtons != nil { 
+        if cardButtons != nil {
+            // приведение кнопки "выдать еще 3 карты" в неактивный режим.
+            // кнопка "Give 3 More Cards" нажимается в случаях если колода не пуста и
+            //при этом (в игре (на экране) <= 21 карты или последний ход выявил сет)
+            give3MoreCardsButton.isEnabled = setGame.deck.count != 0 && ((setGame.inGame.count <= 21) || (setGame.matched != nil && setGame.matched!)) ? true : false
+            
+            // обновление поля с информацией о возможном кол-ве сетов и о счёте
             scoreLabel.text = "Possible sets: \(setGame.possibleSets) | Score: \(setGame.score)"
+            
+            // обновление кнопок с изображениями карт
             for index in cardButtons.indices {
                 let button = cardButtons[index]
                 if index < setGame.inGame.count {
@@ -61,16 +75,7 @@ class SetViewController: UIViewController {
                     button.setTitle(nil, for: .normal)
                 }
             }
-//            give3MoreCardsButton.isHighlighted = true
         }
-    }
-    
-    @IBAction private func give3MoreCarsButtonPressed(_ sender: UIButton) {
-        setGame.get3MoreCards()
-        updateViewsFromModel()
-    }
-    @IBAction private func startNewGameButtonPressed(_ sender: UIButton) {
-        startNewGame()
     }
 
     private func drawSymbol(shape: Features.Shape, color: Features.Color, number: Features.Number, shading: Features.Shading) -> NSMutableAttributedString {
