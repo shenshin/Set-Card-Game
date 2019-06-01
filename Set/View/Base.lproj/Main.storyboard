@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -288,16 +288,34 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bj-Lx-U2o">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DIg-eU-keO">
                                         <rect key="frame" x="0.0" y="461.33333333333331" width="384" height="59.999999999999943"/>
-                                        <color key="backgroundColor" red="0.83922141790000004" green="0.83920556310000005" blue="0.83921635149999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Give 3 more cards!!!">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="give3MoreCarsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zAg-Ko-EEB"/>
-                                        </connections>
-                                    </button>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bj-Lx-U2o">
+                                                <rect key="frame" x="0.0" y="0.0" width="282.66666666666669" height="60"/>
+                                                <color key="backgroundColor" red="0.83922141790000004" green="0.83920556310000005" blue="0.83921635149999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="Give 3 more cards!!!">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="give3MoreCarsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zAg-Ko-EEB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IPZ-dV-UTa">
+                                                <rect key="frame" x="290.66666666666669" y="0.0" width="93.333333333333314" height="60"/>
+                                                <color key="backgroundColor" red="0.83213047141341345" green="0.92240079327251134" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="Hint!">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="showHint:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V2t-U0-4Q3"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="8bj-Lx-U2o" firstAttribute="width" secondItem="IPZ-dV-UTa" secondAttribute="width" multiplier="3" constant="3" id="OP6-FE-JbF"/>
+                                        </constraints>
+                                    </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Qb-s1-1qs">
                                         <rect key="frame" x="0.0" y="558.66666666666663" width="384" height="60"/>
                                         <color key="backgroundColor" red="0.83922141790000004" green="0.83920556310000005" blue="0.83921635149999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -318,7 +336,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="4Qb-s1-1qs" firstAttribute="height" secondItem="Oxj-L3-tk8" secondAttribute="height" multiplier="2" id="7Wo-p8-kVx"/>
-                                    <constraint firstItem="8bj-Lx-U2o" firstAttribute="height" secondItem="Oxj-L3-tk8" secondAttribute="height" multiplier="2" id="YtD-PO-Bpm"/>
+                                    <constraint firstItem="DIg-eU-keO" firstAttribute="height" secondItem="Oxj-L3-tk8" secondAttribute="height" multiplier="2" id="Wjy-a4-k5x"/>
                                     <constraint firstItem="2rD-L3-YDU" firstAttribute="height" secondItem="VRL-Ej-crQ" secondAttribute="height" multiplier="1:1.618" id="a2z-dK-0Yl"/>
                                 </constraints>
                             </stackView>

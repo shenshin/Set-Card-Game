@@ -1,12 +1,19 @@
 
 import Foundation
 
-let ints = [Int](1...10)
-let reduce1 = ints.reduce(into: Double(ints.first!)) {$0*=Double($1)}
-let reduce2 = ints.reduce(Double(ints.first!)) {$0*Double($1)}
-let newInts = ints.compactMap {$0 != 5 ? $0 : nil}
-let newInts2 = ints.filter {$0 != 5}
-print(newInts)
-print(newInts2)
-print(reduce1)
-print(reduce2)
+
+enum Parameter {
+    enum Value: Int, CaseIterable, CustomStringConvertible {
+        case one, two, three
+        var description: String {return "\(rawValue)"}
+    }
+    case shape(Value)
+    case color(Value)
+    case number(Value)
+    case shading(Value)
+}
+struct SetCard{
+    let parameters: [Parameter]
+}
+let card1 = SetCard(parameters: [.shape(.one), .color(.two), .number(.three), .shading(.one)])
+print(card1)

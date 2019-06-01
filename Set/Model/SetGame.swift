@@ -20,6 +20,9 @@ struct SetGame {
         return chosen.count == 3 ? isASet(chosen) ? true : false : nil
     }
     private(set) var score: Int = 0
+    var sets: [[Card]] {
+        return inGame.combinations(taking: 3).filter{isASet($0)}
+    }
     var possibleSets: Int {
         return inGame.combinations(taking: 3).reduce(into: 0){$0 += isASet($1) ? 1 : 0}
     }
@@ -102,7 +105,7 @@ struct SetGame {
 //    func isASet(_ cards: [Card]) -> Bool {
 //        assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
 //        return cards.reduce(into: true) { (result, card) in
-//            card.features.forEach()
+//            //card.features.forEach()
 //        }
 //    }
     func isASet(_ cards: [Card]) -> Bool {
