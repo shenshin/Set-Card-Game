@@ -14,7 +14,7 @@
         <!--Set View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SetViewController" customModule="Set" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetViewController" id="BYZ-38-t0r" customClass="SetViewController" customModule="Set" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -382,6 +382,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="128.80434782608697"/>
+        </scene>
+        <!--Card View Controller-->
+        <scene sceneID="fxD-9d-6Rz">
+            <objects>
+                <viewController storyboardIdentifier="CardViewController" id="gLI-Ph-T4Z" customClass="CardViewController" customModule="Set" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IpM-Kq-gb9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Rym-3Y-qo1" customClass="CardView" customModule="Set" customModuleProvider="target">
+                                <rect key="frame" x="15" y="35" width="384" height="686"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="w8i-wt-3h2" firstAttribute="bottom" secondItem="Rym-3Y-qo1" secondAttribute="bottom" constant="15" id="4mQ-qy-Tyf"/>
+                            <constraint firstItem="Rym-3Y-qo1" firstAttribute="leading" secondItem="w8i-wt-3h2" secondAttribute="leading" constant="15" id="7yI-Bq-YJQ"/>
+                            <constraint firstItem="Rym-3Y-qo1" firstAttribute="top" secondItem="w8i-wt-3h2" secondAttribute="top" constant="15" id="QWf-Bn-v71"/>
+                            <constraint firstItem="w8i-wt-3h2" firstAttribute="trailing" secondItem="Rym-3Y-qo1" secondAttribute="trailing" constant="15" id="hPI-H2-0Rc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="w8i-wt-3h2"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bSr-HH-941" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="869.56521739130437" y="128.80434782608697"/>
         </scene>
     </scenes>
 </document>

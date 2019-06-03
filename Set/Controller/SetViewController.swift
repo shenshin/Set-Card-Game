@@ -40,7 +40,7 @@ class SetViewController: UIViewController {
     }
     @IBAction private func showHint(_ sender: UIButton) {
         if setGame.possibleSets > 0 {
-            Array(setGame.sets.first!.map {setGame.inGame.firstIndex(of: $0)!}.prefix(2)).forEach {
+            setGame.sets.first!.map {setGame.inGame.firstIndex(of: $0)!}.prefix(2).forEach {
                 cardButtons[$0].backgroundColor = #colorLiteral(red: 0.7338971496, green: 0.8800854087, blue: 0.9710964561, alpha: 1)
             }
         }

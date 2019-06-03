@@ -20,13 +20,15 @@ struct SetGame {
         return chosen.count == 3 ? isASet(chosen) ? true : false : nil
     }
     private(set) var score: Int = 0
+    /// Коллекция 3-карточных массивов, составляющих сет на данный момент игры
     var sets: [[Card]] {
         return inGame.combinations(taking: 3).filter{isASet($0)}
     }
+    /// Количество возможных сетов среди карт, находящихся в игре
     var possibleSets: Int {
         return inGame.combinations(taking: 3).reduce(into: 0){$0 += isASet($1) ? 1 : 0}
     }
-
+    /// Сбрасывает все параметры для начала новой игры
     mutating func startNewGame() {
         resetDeck()
         inGame.removeAll()
@@ -134,6 +136,7 @@ struct SetGame {
         deck = Combinatorics.permutationsWithRepetitionFrom(Features.rawValues, taking: 4).map{Card($0)}
         deck.shuffle()
     }
+
 }
 
 

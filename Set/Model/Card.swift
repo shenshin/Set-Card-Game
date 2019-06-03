@@ -93,3 +93,37 @@ extension Features: CustomStringConvertible {
     }
 }
 
+
+
+
+struct FeaturesCollection {
+    typealias DictionaryType = [Int]
+    
+    // Underlying, private storage, that is the same type of dictionary
+    // that we previously was using at the call site
+    private var features = DictionaryType()
+    
+    // Enable our collection to be initialized with a dictionary
+    init(features: DictionaryType) {
+        self.features = features
+    }
+}
+extension FeaturesCollection: Collection {
+    // Required nested types, that tell Swift what our collection contains
+    typealias Index = DictionaryType.Index
+    typealias Element = DictionaryType.Element
+    
+    // The upper and lower bounds of the collection, used in iterations
+    var startIndex: Index { return features.startIndex }
+    var endIndex: Index { return features.endIndex }
+    
+    // Required subscript, based on a dictionary index
+    subscript(index: Index) -> Iterator.Element {
+        get { return features[index] }
+    }
+    
+    // Method that returns the next index when iterating
+    func index(after i: Index) -> Index {
+        return features.index(after: i)
+    }
+}
