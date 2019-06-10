@@ -7,30 +7,33 @@
 //
 
 import UIKit
-
-class CardView: UIView {
+@IBDesignable class CardView: UIView {
 
     override func draw(_ rect: CGRect) {
-        let bezier2Path = UIBezierPath()
-        bezier2Path.move(to: CGPoint(x: 307.02, y: 161.16))
-        bezier2Path.addCurve(to: CGPoint(x: 232.19, y: 176.35), controlPoint1: CGPoint(x: 293.65, y: 169.38), controlPoint2: CGPoint(x: 269.04, y: 184.8))
-        bezier2Path.addCurve(to: CGPoint(x: 136.94, y: 160.06), controlPoint1: CGPoint(x: 195.35, y: 167.9), controlPoint2: CGPoint(x: 184.93, y: 158.18))
-        bezier2Path.addCurve(to: CGPoint(x: 42.69, y: 201.37), controlPoint1: CGPoint(x: 88.96, y: 161.94), controlPoint2: CGPoint(x: 59.83, y: 199.49))
-        bezier2Path.addCurve(to: CGPoint(x: 12.7, y: 172.26), controlPoint1: CGPoint(x: 25.55, y: 203.25), controlPoint2: CGPoint(x: 16.14, y: 184.26))
-        bezier2Path.addCurve(to: CGPoint(x: 17.84, y: 102.78), controlPoint1: CGPoint(x: 9.26, y: 160.27), controlPoint2: CGPoint(x: 7.32, y: 128.21))
-        bezier2Path.addCurve(to: CGPoint(x: 58.97, y: 48.32), controlPoint1: CGPoint(x: 28.37, y: 77.36), controlPoint2: CGPoint(x: 36.43, y: 64.59))
-        bezier2Path.addCurve(to: CGPoint(x: 124.09, y: 27.67), controlPoint1: CGPoint(x: 81.51, y: 32.06), controlPoint2: CGPoint(x: 102.67, y: 28.61))
-        bezier2Path.addCurve(to: CGPoint(x: 186.64, y: 39.87), controlPoint1: CGPoint(x: 145.51, y: 26.73), controlPoint2: CGPoint(x: 167.79, y: 32.36))
-        bezier2Path.addCurve(to: CGPoint(x: 248.33, y: 49.26), controlPoint1: CGPoint(x: 205.49, y: 47.38), controlPoint2: CGPoint(x: 222.63, y: 54.9))
-        bezier2Path.addCurve(to: CGPoint(x: 296.32, y: 24.85), controlPoint1: CGPoint(x: 274.04, y: 43.63), controlPoint2: CGPoint(x: 287.75, y: 30.48))
-        bezier2Path.addCurve(to: CGPoint(x: 329.73, y: 8.89), controlPoint1: CGPoint(x: 304.89, y: 19.22), controlPoint2: CGPoint(x: 315.17, y: 7.95))
-        bezier2Path.addCurve(to: CGPoint(x: 356.3, y: 49.26), controlPoint1: CGPoint(x: 344.3, y: 9.83), controlPoint2: CGPoint(x: 354.09, y: 35.02))
-        bezier2Path.addCurve(to: CGPoint(x: 349.4, y: 110.06), controlPoint1: CGPoint(x: 358.5, y: 63.5), controlPoint2: CGPoint(x: 359.5, y: 87.5))
-        bezier2Path.addCurve(to: CGPoint(x: 307.02, y: 161.16), controlPoint1: CGPoint(x: 339.3, y: 132.62), controlPoint2: CGPoint(x: 320.39, y: 152.94))
-        bezier2Path.close()
+        let xSc: CGFloat = 1
+        let ySc: CGFloat = 1
+        var squigglePoints: [[CGFloat]] = []
+        squigglePoints.append([232.19, 176.35, 293.65, 169.38, 184.8])
+        let squiggle = UIBezierPath()
+        squiggle.move(to: CGPoint(x: xSc * 307.02, y: ySc * 161.16))
+        squiggle.addCurve(to: CGPoint(x: xSc * 232.19, y: ySc * 176.35), controlPoint1: CGPoint(x: xSc * 293.65, y: ySc * 169.38), controlPoint2: CGPoint(x: xSc * 269.04, y: ySc * 184.8))
+        squiggle.addCurve(to: CGPoint(x: xSc * 136.94, y: ySc * 160.06), controlPoint1: CGPoint(x: xSc * 195.35, y: ySc * 167.9), controlPoint2: CGPoint(x: xSc * 184.93, y: ySc * 158.18))
+        squiggle.addCurve(to: CGPoint(x: xSc * 42.69, y: ySc * 201.37), controlPoint1: CGPoint(x: xSc * 88.96, y: ySc * 161.94), controlPoint2: CGPoint(x: xSc * 59.83, y: ySc * 199.49))
+        squiggle.addCurve(to: CGPoint(x: xSc * 12.7, y: ySc * 172.26), controlPoint1: CGPoint(x: xSc * 25.55, y: ySc * 203.25), controlPoint2: CGPoint(x: xSc * 16.14, y: ySc * 184.26))
+        squiggle.addCurve(to: CGPoint(x: xSc * 17.84, y: ySc * 102.78), controlPoint1: CGPoint(x: xSc * 9.26, y: ySc * 160.27), controlPoint2: CGPoint(x: xSc * 7.32, y: ySc * 128.21))
+        squiggle.addCurve(to: CGPoint(x: xSc * 58.97, y: ySc * 48.32), controlPoint1: CGPoint(x: xSc * 28.37, y: ySc * 77.36), controlPoint2: CGPoint(x: xSc * 36.43, y: ySc * 64.59))
+        squiggle.addCurve(to: CGPoint(x: xSc * 124.09, y: ySc * 27.67), controlPoint1: CGPoint(x: xSc * 81.51, y: ySc * 32.06), controlPoint2: CGPoint(x: xSc * 102.67, y: ySc * 28.61))
+        squiggle.addCurve(to: CGPoint(x: xSc * 186.64, y: ySc * 39.87), controlPoint1: CGPoint(x: xSc * 145.51, y: ySc * 26.73), controlPoint2: CGPoint(x: xSc * 167.79, y: ySc * 32.36))
+        squiggle.addCurve(to: CGPoint(x: xSc * 248.33, y: ySc * 49.26), controlPoint1: CGPoint(x: xSc * 205.49, y: ySc * 47.38), controlPoint2: CGPoint(x: xSc * 222.63, y: ySc * 54.9))
+        squiggle.addCurve(to: CGPoint(x: xSc * 296.32, y: ySc * 24.85), controlPoint1: CGPoint(x: xSc * 274.04, y: ySc * 43.63), controlPoint2: CGPoint(x: xSc * 287.75, y: ySc * 30.48))
+        squiggle.addCurve(to: CGPoint(x: xSc * 329.73, y: ySc * 8.89), controlPoint1: CGPoint(x: xSc * 304.89, y: ySc * 19.22), controlPoint2: CGPoint(x: xSc * 315.17, y: ySc * 7.95))
+        squiggle.addCurve(to: CGPoint(x: xSc * 356.3, y: ySc * 49.26), controlPoint1: CGPoint(x: xSc * 344.3, y: ySc * 9.83), controlPoint2: CGPoint(x: xSc * 354.09, y: ySc * 35.02))
+        squiggle.addCurve(to: CGPoint(x: xSc * 349.4, y: ySc * 110.06), controlPoint1: CGPoint(x: xSc * 358.5, y: ySc * 63.5), controlPoint2: CGPoint(x: xSc * 359.5, y: ySc * 87.5))
+        squiggle.addCurve(to: CGPoint(x: xSc * 307.02, y: ySc * 161.16), controlPoint1: CGPoint(x: xSc * 339.3, y: ySc * 132.62), controlPoint2: CGPoint(x: xSc * 320.39, y: ySc * 152.94))
+        squiggle.close()
         UIColor.red.setStroke()
-        bezier2Path.lineWidth = 1
-        bezier2Path.stroke()
+        squiggle.lineWidth = 1
+        squiggle.stroke()
 
     }
 }

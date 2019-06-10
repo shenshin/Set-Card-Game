@@ -17,6 +17,8 @@
 		785D3DF822A465CD0077969B /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DF722A465CD0077969B /* Grid.swift */; };
 		785D3DFA22A4ACC60077969B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DF922A4ACC60077969B /* CardView.swift */; };
 		785D3DFC22A4B0200077969B /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DFB22A4B0200077969B /* CardViewController.swift */; };
+		78F0099622AEF78600FAD1D7 /* SetCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099522AEF78600FAD1D7 /* SetCards.swift */; };
+		78F0099822AF07E600FAD1D7 /* SetGameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099722AF07E600FAD1D7 /* SetGameButton.swift */; };
 		8832B012229910450064463A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832B011229910450064463A /* Extensions.swift */; };
 		888D755A229E99F400FA20C4 /* Combinatorics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888D7559229E99F400FA20C4 /* Combinatorics.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +36,8 @@
 		785D3DF722A465CD0077969B /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		785D3DF922A4ACC60077969B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		785D3DFB22A4B0200077969B /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		78F0099522AEF78600FAD1D7 /* SetCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCards.swift; sourceTree = "<group>"; };
+		78F0099722AF07E600FAD1D7 /* SetGameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameButton.swift; sourceTree = "<group>"; };
 		882E0452229D38C900B76B61 /* demo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = demo.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8832B011229910450064463A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		888D7559229E99F400FA20C4 /* Combinatorics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combinatorics.swift; sourceTree = "<group>"; };
@@ -113,8 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				785D3DF922A4ACC60077969B /* CardView.swift */,
+				78F0099522AEF78600FAD1D7 /* SetCards.swift */,
 				7814AE16229234CB00346673 /* Main.storyboard */,
 				7814AE1B229234D100346673 /* LaunchScreen.storyboard */,
+				78F0099722AF07E600FAD1D7 /* SetGameButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -195,10 +201,12 @@
 				7814AE15229234CB00346673 /* SetViewController.swift in Sources */,
 				7814AE25229245FF00346673 /* SetGame.swift in Sources */,
 				888D755A229E99F400FA20C4 /* Combinatorics.swift in Sources */,
+				78F0099622AEF78600FAD1D7 /* SetCards.swift in Sources */,
 				7814AE13229234CB00346673 /* AppDelegate.swift in Sources */,
 				785D3DFC22A4B0200077969B /* CardViewController.swift in Sources */,
 				785D3DF822A465CD0077969B /* Grid.swift in Sources */,
 				785D3DFA22A4ACC60077969B /* CardView.swift in Sources */,
+				78F0099822AF07E600FAD1D7 /* SetGameButton.swift in Sources */,
 				7814AE2B2292484200346673 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,7 +356,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -367,7 +375,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
