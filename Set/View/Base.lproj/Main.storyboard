@@ -24,7 +24,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-gK-iZX" customClass="SetCards" customModule="Set" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="605"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.1137383953" green="0.11371775720000001" blue="0.1176488176" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MUl-95-c7E">
                                         <rect key="frame" x="0.0" y="613" width="355" height="101"/>

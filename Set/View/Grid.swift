@@ -29,8 +29,26 @@
 
 import UIKit
 
-struct Grid
+struct Grid: Sequence, IteratorProtocol
 {
+    typealias Element = CGRect
+    
+    private var index: Int = 0
+    
+    mutating func next() -> Element? {
+        if index >= 0 && index < count {
+            let rect = self[index]
+            index += 1
+            return rect
+        } else {
+            return nil
+        }
+    }
+    
+    var indices: ClosedRange<Int> {
+        return 0...count
+    }
+
     enum Layout {
         case fixedCellSize(CGSize)
         case dimensions(rowCount: Int, columnCount: Int)
@@ -55,7 +73,7 @@ struct Grid
         return index < cellFrames.count ? cellFrames[index] : nil
     }
     
-    var cellCount: Int {
+    var count: Int {
         get {
             switch layout {
             case .aspectRatio: return cellCountForAspectRatioLayout
@@ -96,7 +114,7 @@ struct Grid
     private var cellFrames = [CGRect]()
     private var cellCountForAspectRatioLayout = 0 { didSet { recalculate() } }
     private var calculatedDimensions: (rowCount: Int, columnCount: Int) = (0, 0)
-    
+ 
     private mutating func recalculate() {
         switch layout {
         case .fixedCellSize(let cellSize):
@@ -125,7 +143,7 @@ struct Grid
             let cellSize = largestCellSizeThatFitsAspectRatio()
             if cellSize.area > 0 {
                 calculatedDimensions.columnCount = Int(frame.size.width / cellSize.width)
-                calculatedDimensions.rowCount = (cellCount + calculatedDimensions.columnCount - 1) / calculatedDimensions.columnCount
+                calculatedDimensions.rowCount = (count + calculatedDimensions.columnCount - 1) / calculatedDimensions.columnCount
             } else {
                 calculatedDimensions = (0, 0)
             }
@@ -149,8 +167,8 @@ struct Grid
         origin.x += offset.dx
         origin.y += offset.dy
         
-        if cellCount > 0 {
-            for _ in 0..<cellCount {
+        if count > 0 {
+            for _ in 0..<count {
                 cellFrames.append(CGRect(origin: origin, size: cellSize))
                 origin.x += cellSize.width
                 if round(origin.x) > round(frame.maxX - cellSize.width) {
@@ -163,11 +181,11 @@ struct Grid
     
     private func largestCellSizeThatFitsAspectRatio() -> CGSize {
         var largestSoFar = CGSize.zero
-        if cellCount > 0 && aspectRatio > 0 {
-            for rowCount in 1...cellCount {
+        if count > 0 && aspectRatio > 0 {
+            for rowCount in 1...count {
                 largestSoFar = cellSizeAssuming(rowCount: rowCount, minimumAllowedSize: largestSoFar)
             }
-            for columnCount in 1...cellCount {
+            for columnCount in 1...count {
                 largestSoFar = cellSizeAssuming(columnCount: columnCount, minimumAllowedSize: largestSoFar)
             }
         }
@@ -184,13 +202,14 @@ struct Grid
             size.width = size.height * aspectRatio
         }
         if size.area > minimumAllowedSize.area {
-            if Int(frame.size.height / size.height) * Int(frame.size.width / size.width) >= cellCount {
+            if Int(frame.size.height / size.height) * Int(frame.size.width / size.width) >= count {
                 return size
             }
         }
         return minimumAllowedSize
     }
 }
+
 
 private extension CGSize {
     var area: CGFloat {

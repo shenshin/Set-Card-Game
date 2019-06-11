@@ -90,7 +90,6 @@
 				7814AE2A2292484200346673 /* Card.swift */,
 				8832B011229910450064463A /* Extensions.swift */,
 				888D7559229E99F400FA20C4 /* Combinatorics.swift */,
-				785D3DF722A465CD0077969B /* Grid.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -116,6 +115,7 @@
 		7814AE292292466F00346673 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				785D3DF722A465CD0077969B /* Grid.swift */,
 				785D3DF922A4ACC60077969B /* CardView.swift */,
 				78F0099522AEF78600FAD1D7 /* SetCards.swift */,
 				7814AE16229234CB00346673 /* Main.storyboard */,
