@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetViewController: UIViewController {
+class EmojiSetViewController: UIViewController {
     
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var scoreLabel: UILabel!
