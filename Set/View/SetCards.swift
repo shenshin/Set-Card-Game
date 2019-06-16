@@ -26,6 +26,7 @@ class SetCards: UIView {
     }()
 
     override func layoutSubviews() {
+        super.layoutSubviews()
         let grid: Grid = Grid(layout: .dimensions(rowCount: 9, columnCount: 9), frame: bounds)
         var cardIndex = 1
         for labelIndex in labels.indices {

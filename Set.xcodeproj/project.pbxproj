@@ -15,12 +15,12 @@
 		7814AE25229245FF00346673 /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE24229245FF00346673 /* SetGame.swift */; };
 		7814AE2B2292484200346673 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE2A2292484200346673 /* Card.swift */; };
 		785D3DF822A465CD0077969B /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DF722A465CD0077969B /* Grid.swift */; };
-		785D3DFA22A4ACC60077969B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DF922A4ACC60077969B /* CardView.swift */; };
 		785D3DFC22A4B0200077969B /* GraphicalSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DFB22A4B0200077969B /* GraphicalSetViewController.swift */; };
 		78F0099622AEF78600FAD1D7 /* SetCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099522AEF78600FAD1D7 /* SetCards.swift */; };
 		78F0099822AF07E600FAD1D7 /* SetGameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099722AF07E600FAD1D7 /* SetGameButton.swift */; };
 		8832B012229910450064463A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832B011229910450064463A /* Extensions.swift */; };
 		888D755A229E99F400FA20C4 /* Combinatorics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888D7559229E99F400FA20C4 /* Combinatorics.swift */; };
+		888FA91322B095200038D59A /* SetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FA91222B095200038D59A /* SetCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,13 +34,13 @@
 		7814AE24229245FF00346673 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		7814AE2A2292484200346673 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		785D3DF722A465CD0077969B /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
-		785D3DF922A4ACC60077969B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		785D3DFB22A4B0200077969B /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
 		78F0099522AEF78600FAD1D7 /* SetCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCards.swift; sourceTree = "<group>"; };
 		78F0099722AF07E600FAD1D7 /* SetGameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameButton.swift; sourceTree = "<group>"; };
 		882E0452229D38C900B76B61 /* demo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = demo.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8832B011229910450064463A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		888D7559229E99F400FA20C4 /* Combinatorics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combinatorics.swift; sourceTree = "<group>"; };
+		888FA91222B095200038D59A /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				785D3DF722A465CD0077969B /* Grid.swift */,
-				785D3DF922A4ACC60077969B /* CardView.swift */,
+				888FA91222B095200038D59A /* SetCardView.swift */,
 				78F0099522AEF78600FAD1D7 /* SetCards.swift */,
 				7814AE16229234CB00346673 /* Main.storyboard */,
 				7814AE1B229234D100346673 /* LaunchScreen.storyboard */,
@@ -198,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8832B012229910450064463A /* Extensions.swift in Sources */,
+				888FA91322B095200038D59A /* SetCardView.swift in Sources */,
 				7814AE15229234CB00346673 /* EmojiSetViewController.swift in Sources */,
 				7814AE25229245FF00346673 /* SetGame.swift in Sources */,
 				888D755A229E99F400FA20C4 /* Combinatorics.swift in Sources */,
@@ -205,7 +206,6 @@
 				7814AE13229234CB00346673 /* AppDelegate.swift in Sources */,
 				785D3DFC22A4B0200077969B /* GraphicalSetViewController.swift in Sources */,
 				785D3DF822A465CD0077969B /* Grid.swift in Sources */,
-				785D3DFA22A4ACC60077969B /* CardView.swift in Sources */,
 				78F0099822AF07E600FAD1D7 /* SetGameButton.swift in Sources */,
 				7814AE2B2292484200346673 /* Card.swift in Sources */,
 			);
@@ -284,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -339,7 +339,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -356,14 +356,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shenshin.Set;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -375,14 +375,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shenshin.Set;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -9,13 +9,10 @@
 import UIKit
 
 class SetGameButton: UIButton {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+// кнопки снизу игрового экрана. можно добавить сюда какую-то кастомизацию, например скруглить их углы
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let buttonCornerRadius = bounds.height / 7
+        layer.cornerRadius = buttonCornerRadius
     }
-    */
-
 }
