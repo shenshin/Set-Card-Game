@@ -2,17 +2,17 @@
 //  SetCardView.swift
 //  Set
 //
-//  Created by Macbook Air on 12.06.2019.
+//  Created by Alexander Shenshin on 12.06.2019.
 //  Copyright © 2019 Ales Shenshin. All rights reserved.
 //
 
 import UIKit
 
 fileprivate struct Constants {
-    static let lineWidthToAspect: CGFloat = 1/40
-    static let stripesSpaceToBoundsWidth: CGFloat = 1/35
+    static let lineWidthToBoundsWidth: CGFloat = 1/35
+    static let stripesSpaceToBoundsWidth: CGFloat = 1/30
     static let stripesToLineWidth: CGFloat = 1/2.5
-    static let aspectRatio: CGFloat = 1.618
+    static let aspectRatio: CGFloat = 1.618 // (Golden ratio)
 }
 
 class SetCardView: UIView {
@@ -48,7 +48,7 @@ class SetCardView: UIView {
             return .white
         }
     }
-    private func drawingPath(in rect: CGRect) -> UIBezierPath {
+    private func drawPath(in rect: CGRect) -> UIBezierPath {
         switch features.shape {
         case .squiggle:
             return drawSuiggle(in: rect)
@@ -59,7 +59,7 @@ class SetCardView: UIView {
         }
     }
     
-    private var lineWidth: CGFloat { return bounds.aspect * Constants.lineWidthToAspect }
+    private var lineWidth: CGFloat { return bounds.width * Constants.lineWidthToBoundsWidth }
     private var stripesLineWidth: CGFloat { return lineWidth * Constants.stripesToLineWidth }
     
     /// Настройка параметров класса. Вызывается один раз после инициализации
@@ -71,9 +71,13 @@ class SetCardView: UIView {
     override func draw(_ rect: CGRect) {
         strokeColor.setStroke()
         fillColor.setFill()
-        // вычисляю размер фигуры согласно aspectRatio
-        let smallerRect = rect.insetBy(dx: lineWidth/2, dy: lineWidth/2 + (rect.height - rect.width/Constants.aspectRatio)/2)
-        let shape = drawingPath(in: smallerRect)
+        // т.к. размер вида может быть каким угодно, нужно создать новый прямоугольник,
+        // находящийся по середине rect и уменьшенный согласно aspectRatio
+        let smallerRect: CGRect = bounds.height > bounds.width ?
+            rect.insetBy(dx: lineWidth/2, dy: lineWidth/2 + (rect.height - rect.width/Constants.aspectRatio)/2) :
+            rect.insetBy(dx: lineWidth/2 + (rect.width - rect.height*Constants.aspectRatio)/2, dy: lineWidth/2)
+        // Рисую фигуру в зависимости от выбранной формы
+        let shape = drawPath(in: smallerRect)
         shape.lineWidth = lineWidth
         shape.lineJoinStyle = .round
         shape.fill()
@@ -137,6 +141,11 @@ class SetCardView: UIView {
         let oval = UIBezierPath(roundedRect: rect, cornerRadius: rect.height/2)
         return oval
     }
+    
+    // вынужден использовать инициализаторы для правильной настройки всех параметров вида,
+    // находящихся в методе setupView, вызываемом из init-ов
+    
+    /// Задание всех атрибутов карты при создании вида
     convenience init(shape: Features.Shape, color: Features.Color, number: Features.Number, shading: Features.Shading) {
         self.init(frame: CGRect.zero)
         self.features = Features(shape: shape, color: color, number: number, shading: shading)
@@ -148,10 +157,5 @@ class SetCardView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
-    }
-}
-extension CGRect {
-    var aspect: CGFloat {
-        return (width + height) / 2
     }
 }
