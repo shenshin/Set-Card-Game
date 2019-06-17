@@ -9,10 +9,20 @@
 import UIKit
 
 fileprivate struct Constants {
-    static let shapeOffset: CGFloat = 1/10
+    /// Отступ от фигуры до начала её ограничивающего прямоугольника:
+    /// отступ справа и слева (по горизонтали) по отношению к ширине прямоугольника и
+    /// отступ сверху и снизу (по вертикали) по отношению к высоте прямоугольника.
+    /// На практике величина этого значения определяет расстояние между фигурами
+    static let shapeOffset: CGFloat = 1/15
+    /// Отступ от границ view до начала области отрисовки фигур
+    static let boundsInset: CGFloat = 2
+    /// Отношение толщины линии обводки к ширине фигуры
     static let lineWidthToBoundsWidth: CGFloat = 1/35
+    /// Отношение промежутка между линиями штриховки к ширине фигуры
     static let stripesSpaceToBoundsWidth: CGFloat = 1/10
+    /// Отношение толщины линий штриховки фигуры к её линии обводки
     static let stripesToLineWidth: CGFloat = 1/2.5
+    /// Отношение ширины фигуры к её длине (равно золотому сечению)
     static let aspectRatio: CGFloat = 1.618 // (Golden ratio)
 }
 
@@ -49,6 +59,20 @@ class SetCardView: UIView {
             return .white
         }
     }
+    private var rectForElement: CGRect {
+        let dimentions: (rows: Int, columns: Int) = bounds.width > bounds.height ? (1, 3) : (3, 1)
+        return Grid(layout: .dimensions(rowCount: dimentions.rows, columnCount: dimentions.columns), frame: bounds)[0]!
+    }
+    private var grid: Grid  {
+        let dimentions: (rows: Int, columns: Int) = bounds.width > bounds.height ? (1, features.number.rawValue) : (features.number.rawValue, 1)
+        return Grid(layout: .dimensions(rowCount: dimentions.rows, columnCount: dimentions.columns), frame: bounds.insetBy(dx: Constants.boundsInset, dy: Constants.boundsInset))
+    }
+    
+    /// Настройка параметров класса. Вызывается один раз после инициализации
+    private func setupView() {
+        backgroundColor = .clear
+        contentMode = .redraw
+    }
     private func drawPath(in rect: CGRect) -> UIBezierPath {
         switch features.shape {
         case .squiggle:
@@ -59,25 +83,21 @@ class SetCardView: UIView {
             return drawOval(in: rect)
         }
     }
-    /// Настройка параметров класса. Вызывается один раз после инициализации
-    private func setupView() {
-        backgroundColor = .clear
-        contentMode = .redraw
-    }
 
     override func draw(_ rect: CGRect) {
-        strokeColor.setStroke()
-        fillColor.setFill()
-        if rect.width < rect.height {
-            
+        for index in 0..<grid.count {
+            drawElement(in: grid[index]!)
         }
     }
+    
     private func drawElement(in rect: CGRect) {
+        strokeColor.setStroke()
+        fillColor.setFill()
         // т.к. размер вида может быть каким угодно, нужно создать новый прямоугольник,
         // находящийся по середине rect и уменьшенный согласно aspectRatio
-        var newRect: CGRect = bounds.height > bounds.width ?
-            rect.insetBy(dx: 0, dy: (rect.height - rect.width/Constants.aspectRatio)/2) :
-            rect.insetBy(dx: (rect.width - rect.height*Constants.aspectRatio)/2, dy: 0)
+        var newRect: CGRect = (rect.width > rect.height) && ((rect.width / rect.height) > Constants.aspectRatio) ?
+            rect.insetBy(dx: (rect.width - rect.height*Constants.aspectRatio)/2, dy: 0) :
+            rect.insetBy(dx: 0, dy: (rect.height - rect.width/Constants.aspectRatio)/2)
         // делаю отступы фигуры от краёв view на велечину shapeOffset
         newRect = newRect.insetBy(dx: newRect.width*Constants.shapeOffset, dy: newRect.height*Constants.shapeOffset)
         let lineWidth: CGFloat = newRect.width * Constants.lineWidthToBoundsWidth

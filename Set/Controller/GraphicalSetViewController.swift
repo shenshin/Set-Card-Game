@@ -46,7 +46,7 @@ class GraphicalSetViewController: UIViewController {
     @IBAction private func showHint(_ sender: UIButton) {
         index = index > 2 ? 0 : index
         for card in gameRect.cardViews {
-            card.features.shape = SetCardView.Features.Shape.allCases[index]
+            card.features.number = SetCardView.Features.Number.allCases[index]
         }
         index += 1
 //        if setGame.possibleSets > 0 {
