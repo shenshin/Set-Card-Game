@@ -22,7 +22,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9A5-W8-MUA">
                                 <rect key="frame" x="10" y="54" width="355" height="714"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-gK-iZX" customClass="SetCardView" customModule="Set" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-gK-iZX" customClass="SetCards" customModule="Set" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="605"/>
                                         <color key="backgroundColor" red="0.1137383953" green="0.11371775720000001" blue="0.1176488176" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </view>

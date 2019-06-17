@@ -9,8 +9,9 @@
 import UIKit
 
 fileprivate struct Constants {
+    static let shapeOffset: CGFloat = 1/10
     static let lineWidthToBoundsWidth: CGFloat = 1/35
-    static let stripesSpaceToBoundsWidth: CGFloat = 1/30
+    static let stripesSpaceToBoundsWidth: CGFloat = 1/10
     static let stripesToLineWidth: CGFloat = 1/2.5
     static let aspectRatio: CGFloat = 1.618 // (Golden ratio)
 }
@@ -58,10 +59,6 @@ class SetCardView: UIView {
             return drawOval(in: rect)
         }
     }
-    
-    private var lineWidth: CGFloat { return bounds.width * Constants.lineWidthToBoundsWidth }
-    private var stripesLineWidth: CGFloat { return lineWidth * Constants.stripesToLineWidth }
-    
     /// Настройка параметров класса. Вызывается один раз после инициализации
     private func setupView() {
         backgroundColor = .clear
@@ -71,13 +68,21 @@ class SetCardView: UIView {
     override func draw(_ rect: CGRect) {
         strokeColor.setStroke()
         fillColor.setFill()
+        if rect.width < rect.height {
+            
+        }
+    }
+    private func drawElement(in rect: CGRect) {
         // т.к. размер вида может быть каким угодно, нужно создать новый прямоугольник,
         // находящийся по середине rect и уменьшенный согласно aspectRatio
-        let smallerRect: CGRect = bounds.height > bounds.width ?
-            rect.insetBy(dx: lineWidth/2, dy: lineWidth/2 + (rect.height - rect.width/Constants.aspectRatio)/2) :
-            rect.insetBy(dx: lineWidth/2 + (rect.width - rect.height*Constants.aspectRatio)/2, dy: lineWidth/2)
+        var newRect: CGRect = bounds.height > bounds.width ?
+            rect.insetBy(dx: 0, dy: (rect.height - rect.width/Constants.aspectRatio)/2) :
+            rect.insetBy(dx: (rect.width - rect.height*Constants.aspectRatio)/2, dy: 0)
+        // делаю отступы фигуры от краёв view на велечину shapeOffset
+        newRect = newRect.insetBy(dx: newRect.width*Constants.shapeOffset, dy: newRect.height*Constants.shapeOffset)
+        let lineWidth: CGFloat = newRect.width * Constants.lineWidthToBoundsWidth
         // Рисую фигуру в зависимости от выбранной формы
-        let shape = drawPath(in: smallerRect)
+        let shape = drawPath(in: newRect)
         shape.lineWidth = lineWidth
         shape.lineJoinStyle = .round
         shape.fill()
@@ -87,13 +92,12 @@ class SetCardView: UIView {
             let context = UIGraphicsGetCurrentContext()
             context?.saveGState()
             shape.addClip()
-            let stripes = drawStripes(in: bounds)
-            stripes.lineWidth = stripesLineWidth
+            let stripes = drawStripes(in: newRect)
+            stripes.lineWidth = lineWidth * Constants.stripesToLineWidth
             stripes.stroke()
             context?.restoreGState()
         }
     }
-    
     /// Рисует "закарючку" в прямоугольнике
     private func drawSuiggle(in rect: CGRect) -> UIBezierPath {
         let squiggle = UIBezierPath()
@@ -122,7 +126,7 @@ class SetCardView: UIView {
     private func drawStripes(in rect: CGRect) -> UIBezierPath {
         let stripes = UIBezierPath()
         let dx: CGFloat = rect.width * Constants.stripesSpaceToBoundsWidth
-        for xCoord in stride(from: rect.minX + dx*1.5, to: rect.maxX - dx, by: dx) {
+        for xCoord in stride(from: rect.minX + dx, to: rect.maxX, by: dx) {
             stripes.move(to: CGPoint(x: xCoord, y: rect.minY))
             stripes.addLine(to: CGPoint(x: xCoord, y: rect.maxY))
         }

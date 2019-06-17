@@ -10,7 +10,7 @@ import UIKit
 
 class GraphicalSetViewController: UIViewController {
 
-    @IBOutlet weak var gameRect: SetCardView!
+    @IBOutlet weak var gameRect: SetCards!
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var give3MoreCardsButton: UIButton!
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
@@ -45,7 +45,9 @@ class GraphicalSetViewController: UIViewController {
     var index: Int = 0
     @IBAction private func showHint(_ sender: UIButton) {
         index = index > 2 ? 0 : index
-        gameRect.features.shape = SetCardView.Features.Shape.allCases[index]
+        for card in gameRect.cardViews {
+            card.features.shape = SetCardView.Features.Shape.allCases[index]
+        }
         index += 1
 //        if setGame.possibleSets > 0 {
 //            setGame.sets.first!.map {setGame.inGame.firstIndex(of: $0)!}.prefix(2).forEach {
