@@ -8,11 +8,12 @@
 
 import UIKit
 
-class GraphicalSetViewController: UIViewController {
+class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
 
     @IBOutlet private weak var setCards: SetCards!
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var give3MoreCardsButton: UIButton!
+    
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     private lazy var game: SetGame = {
@@ -25,18 +26,26 @@ class GraphicalSetViewController: UIViewController {
         super.viewDidLoad()
         startNewGame()
     }
-    
-    internal func startNewGame() {
-        game.startNewGame()
-        setCards.subviews.forEach {$0.removeFromSuperview()}
-        setCards.cardViews.removeAll()
-        
-        updateViewsFromModel()
+
+    @IBAction func swipeGestureRecognized(_ sender: UISwipeGestureRecognizer) {
+        switch sender.state {
+        case .ended:
+            dealThreeMoreCards()
+        default:
+            break
+        }
+    }
+    @IBAction func rotationGestureRecognixed(_ sender: UIRotationGestureRecognizer) {
+        switch sender.state {
+        case .ended:
+            print("rotation recognized")
+        default:
+            break
+        }
     }
     
     @IBAction private func give3MoreCarsButtonPressed(_ sender: UIButton) {
-        game.get3MoreCards()
-        updateViewsFromModel()
+        dealThreeMoreCards()
     }
     @IBAction private func startNewGameButtonPressed(_ sender: UIButton) {
         startNewGame()
@@ -54,20 +63,39 @@ class GraphicalSetViewController: UIViewController {
 //            }
 //        }
     }
-    
+    internal func cardTapped(_ card: SetCardView) {
+        card.removeFromSuperview()
+        setCards.cardViews.removeAll { $0 == card }
+    }
+    internal func startNewGame() {
+        game.startNewGame()
+        setCards.subviews.forEach {$0.removeFromSuperview()}
+        setCards.cardViews.removeAll()
+        
+        updateViewsFromModel()
+    }
+    private func dealThreeMoreCards() {
+        game.get3MoreCards()
+        updateViewsFromModel()
+    }
     private func updateViewsFromModel() {
         
         // приведение кнопки "выдать еще 3 карты" в неактивный режим.
         // кнопка "Give 3 More Cards" нажимается в случаях если колода не пуста и
         //при этом (в игре (на экране) <= 21 карты или последний ход выявил сет)
-        //            give3MoreCardsButton.isEnabled = game.deck.count != 0 && ((setGame.inGame.count <= 21) || (setGame.matched != nil && setGame.matched!)) ? true : false
+        give3MoreCardsButton.isEnabled = game.deck.count != 0 && ((game.inGame.count <= 78) || (game.matched != nil && game.matched!)) ? true : false
         
         // обновление поля с информацией о возможном кол-ве сетов и о счёте
-        //scoreLabel.text = "Possible sets: \(game.possibleSets)    Score: \(game.score)"
+        scoreLabel.text = /*"Possible sets: \(game.possibleSets)    */"Score: \(game.score)"
    
         for card in game.inGame {
             
             let cardView = SetCardView(shape: card.features.shape, color: card.features.color, number: card.features.number, shading: card.features.shading)
+            let tapGR = UITapGestureRecognizer(target: cardView, action: #selector(SetCardView.tapRecognizedOnCard(by:)))
+            tapGR.numberOfTapsRequired = 1
+            tapGR.numberOfTouchesRequired = 1
+            cardView.addGestureRecognizer(tapGR)
+            cardView.delegate = self
             if !setCards.cardViews.contains(cardView) {
                 setCards.addSubview(cardView)
                 setCards.cardViews.append(cardView)

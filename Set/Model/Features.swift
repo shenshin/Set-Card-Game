@@ -47,3 +47,8 @@ extension Features: Hashable, Equatable {
         hasher.combine(shading)
     }
 }
+extension Features: CustomStringConvertible {
+    var description: String {
+        return "shape: \(shape), color: \(color), number: \(number), shading: \(shading)"
+    }
+}

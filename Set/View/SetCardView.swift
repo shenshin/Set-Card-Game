@@ -28,20 +28,15 @@ fileprivate struct Constants {
     static let cornerRadiusToBoundsWidth: CGFloat = 1/8
 }
 
+protocol SetCardViewDelegate: class {
+    func cardTapped(_ card: SetCardView)
+}
+
 class SetCardView: UIView {
     
-//    struct Features {
-//        enum Color: CaseIterable { case green, purple, red }
-//        enum Shape: CaseIterable { case squiggle, diamond, oval }
-//        enum Number: Int, CaseIterable { case one = 1, two, three }
-//        enum Shading: CaseIterable { case solid, outlined, striped }
-//        init(shape: Shape = Shape.oval, color: Color = Color.red, number: Number = Number.three, shading: Shading = Shading.striped) {
-//            self.shape = shape; self.color = color; self.number = number; self.shading = shading
-//        }
-//        var color: Color; var shape: Shape; var number: Number; var shading: Shading
-//    }
-    
     var features: Features = Features() {didSet{setNeedsLayout();setNeedsDisplay()}}
+    
+    weak var delegate: SetCardViewDelegate?
 
     private var strokeColor: UIColor {
         switch features.color {
@@ -93,6 +88,14 @@ class SetCardView: UIView {
             drawElement(in: firstElement
             .applying(CGAffineTransform(translationX: bounds.isLandscape ? firstElement.width * offset : 0,
                                         y: bounds.isLandscape ? 0 : firstElement.height * offset)))
+        }
+    }
+    @objc func tapRecognizedOnCard(by recognizer: UITapGestureRecognizer) {
+        switch recognizer.state {
+        case .ended:
+            delegate?.cardTapped(self)
+        default:
+            print("recognized some state")
         }
     }
     static func ==(rhs: SetCardView, lhs: SetCardView) -> Bool {

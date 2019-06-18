@@ -9,9 +9,8 @@
 import UIKit
 
 class SetCards: UIView {
-   
-    var cardViews: [SetCardView] = []
 
+    var cardViews: [SetCardView] = [] { didSet { setNeedsLayout() } }
 
     override func layoutSubviews() {
         var grid: Grid = Grid(layout: .aspectRatio(bounds.width / bounds.height), frame: bounds)
