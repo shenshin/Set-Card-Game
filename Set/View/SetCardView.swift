@@ -15,7 +15,7 @@ fileprivate struct Constants {
     /// На практике величина этого значения определяет расстояние между фигурами
     static let shapeOffset: CGFloat = 1/15
     /// Отступ от границ view до начала области отрисовки фигур
-    static let boundsInset: CGFloat = 2
+    static let boundsInset: CGFloat = 5
     /// Отношение толщины линии обводки к ширине фигуры
     static let lineWidthToBoundsWidth: CGFloat = 1/35
     /// Отношение промежутка между линиями штриховки к ширине фигуры
@@ -33,7 +33,7 @@ class SetCardView: UIView {
         enum Shape: CaseIterable { case squiggle, diamond, oval }
         enum Number: Int, CaseIterable { case one = 1, two, three }
         enum Shading: CaseIterable { case solid, outlined, striped }
-        init(shape: Shape = Shape.oval, color: Color = Color.red, number: Number = Number.one, shading: Shading = Shading.striped) {
+        init(shape: Shape = Shape.oval, color: Color = Color.red, number: Number = Number.three, shading: Shading = Shading.striped) {
             self.shape = shape; self.color = color; self.number = number; self.shading = shading
         }
         var color: Color; var shape: Shape; var number: Number; var shading: Shading
@@ -59,13 +59,20 @@ class SetCardView: UIView {
             return .white
         }
     }
-    private var rectForElement: CGRect {
-        let dimentions: (rows: Int, columns: Int) = bounds.width > bounds.height ? (1, 3) : (3, 1)
-        return Grid(layout: .dimensions(rowCount: dimentions.rows, columnCount: dimentions.columns), frame: bounds)[0]!
+    /// Координаты первого элемента из трёх возможных
+    private var firstElement: CGRect {
+        let dimentions: (rows: Int, columns: Int) = bounds.isLandscape ? (1, 3) : (3, 1)
+        let grid = Grid(layout: .dimensions(rowCount: dimentions.rows, columnCount: dimentions.columns),
+             frame: bounds.inset(by: Constants.boundsInset))
+        return grid[0]!
     }
-    private var grid: Grid  {
-        let dimentions: (rows: Int, columns: Int) = bounds.width > bounds.height ? (1, features.number.rawValue) : (features.number.rawValue, 1)
-        return Grid(layout: .dimensions(rowCount: dimentions.rows, columnCount: dimentions.columns), frame: bounds.insetBy(dx: Constants.boundsInset, dy: Constants.boundsInset))
+    /// Соотношения величины отступа от начала границы карты к размеру элемента карты
+    /// Например, при двух элементах на карте, чтобы узнать отступ 1-го элемента от границы карты,
+    /// нужно взять число `offsetsArray[1][0]`, т.е. 1/2, и умножить его на размер (длину или ширину)
+    /// первого элемента карты `firstElement`
+    var offsets: [CGFloat] { // все эти коэфиценты здесь потому что я не смог вычислить формулу для i-го элемента
+        let offsetsArray: [[CGFloat]] = [[1], [1/2, 3/2], [0, 1, 2]]
+        return offsetsArray[features.number.rawValue - 1]
     }
     
     /// Настройка параметров класса. Вызывается один раз после инициализации
@@ -73,29 +80,21 @@ class SetCardView: UIView {
         backgroundColor = .clear
         contentMode = .redraw
     }
-    private func drawPath(in rect: CGRect) -> UIBezierPath {
-        switch features.shape {
-        case .squiggle:
-            return drawSuiggle(in: rect)
-        case .diamond:
-            return drawDiamond(in: rect)
-        case .oval:
-            return drawOval(in: rect)
+
+    override func draw(_ rect: CGRect) {
+        for offset in offsets {
+            drawElement(in: firstElement
+            .applying(CGAffineTransform(translationX: bounds.isLandscape ? firstElement.width * offset : 0,
+                                        y: bounds.isLandscape ? 0 : firstElement.height * offset)))
         }
     }
 
-    override func draw(_ rect: CGRect) {
-        for index in 0..<grid.count {
-            drawElement(in: grid[index]!)
-        }
-    }
-    
     private func drawElement(in rect: CGRect) {
         strokeColor.setStroke()
         fillColor.setFill()
         // т.к. размер вида может быть каким угодно, нужно создать новый прямоугольник,
         // находящийся по середине rect и уменьшенный согласно aspectRatio
-        var newRect: CGRect = (rect.width > rect.height) && ((rect.width / rect.height) > Constants.aspectRatio) ?
+        var newRect: CGRect = rect.isLandscape && ((rect.width / rect.height) > Constants.aspectRatio) ?
             rect.insetBy(dx: (rect.width - rect.height*Constants.aspectRatio)/2, dy: 0) :
             rect.insetBy(dx: 0, dy: (rect.height - rect.width/Constants.aspectRatio)/2)
         // делаю отступы фигуры от краёв view на велечину shapeOffset
@@ -116,6 +115,16 @@ class SetCardView: UIView {
             stripes.lineWidth = lineWidth * Constants.stripesToLineWidth
             stripes.stroke()
             context?.restoreGState()
+        }
+    }
+    private func drawPath(in rect: CGRect) -> UIBezierPath {
+        switch features.shape {
+        case .squiggle:
+            return drawSuiggle(in: rect)
+        case .diamond:
+            return drawDiamond(in: rect)
+        case .oval:
+            return drawOval(in: rect)
         }
     }
     /// Рисует "закарючку" в прямоугольнике
@@ -181,5 +190,16 @@ class SetCardView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
+    }
+}
+extension CGRect {
+    func scaled(to size: CGSize) -> CGRect {
+        return self.applying(CGAffineTransform.identity.scaledBy(x: size.width / width, y: size.height / height))
+    }
+    var isLandscape: Bool {
+        return width > height
+    }
+    func inset(by dxy: CGFloat) -> CGRect {
+        return self.insetBy(dx: dxy, dy: dxy)
     }
 }
