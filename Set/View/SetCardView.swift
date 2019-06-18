@@ -17,27 +17,29 @@ fileprivate struct Constants {
     /// Отступ от границ view до начала области отрисовки фигур
     static let boundsInset: CGFloat = 5
     /// Отношение толщины линии обводки к ширине фигуры
-    static let lineWidthToBoundsWidth: CGFloat = 1/35
+    static let lineWidthToBoundsWidth: CGFloat = 1/20
     /// Отношение промежутка между линиями штриховки к ширине фигуры
     static let stripesSpaceToBoundsWidth: CGFloat = 1/10
     /// Отношение толщины линий штриховки фигуры к её линии обводки
     static let stripesToLineWidth: CGFloat = 1/2.5
     /// Отношение ширины фигуры к её длине (равно золотому сечению)
     static let aspectRatio: CGFloat = 1.618 // (Golden ratio)
+    /// Отношение радиуса угла карты к её ширине
+    static let cornerRadiusToBoundsWidth: CGFloat = 1/8
 }
 
 class SetCardView: UIView {
     
-    struct Features {
-        enum Color: CaseIterable { case green, purple, red }
-        enum Shape: CaseIterable { case squiggle, diamond, oval }
-        enum Number: Int, CaseIterable { case one = 1, two, three }
-        enum Shading: CaseIterable { case solid, outlined, striped }
-        init(shape: Shape = Shape.oval, color: Color = Color.red, number: Number = Number.three, shading: Shading = Shading.striped) {
-            self.shape = shape; self.color = color; self.number = number; self.shading = shading
-        }
-        var color: Color; var shape: Shape; var number: Number; var shading: Shading
-    }
+//    struct Features {
+//        enum Color: CaseIterable { case green, purple, red }
+//        enum Shape: CaseIterable { case squiggle, diamond, oval }
+//        enum Number: Int, CaseIterable { case one = 1, two, three }
+//        enum Shading: CaseIterable { case solid, outlined, striped }
+//        init(shape: Shape = Shape.oval, color: Color = Color.red, number: Number = Number.three, shading: Shading = Shading.striped) {
+//            self.shape = shape; self.color = color; self.number = number; self.shading = shading
+//        }
+//        var color: Color; var shape: Shape; var number: Number; var shading: Shading
+//    }
     
     var features: Features = Features() {didSet{setNeedsLayout();setNeedsDisplay()}}
 
@@ -72,15 +74,20 @@ class SetCardView: UIView {
     /// первого элемента карты `firstElement`
     var offsets: [CGFloat] { // все эти коэфиценты здесь потому что я не смог вычислить формулу для i-го элемента
         let offsetsArray: [[CGFloat]] = [[1], [1/2, 3/2], [0, 1, 2]]
-        return offsetsArray[features.number.rawValue - 1]
+        return offsetsArray[features.number.rawValue]
     }
     
     /// Настройка параметров класса. Вызывается один раз после инициализации
     private func setupView() {
-        backgroundColor = .clear
+        backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
+        layer.borderWidth = 1
+        layer.borderColor = #colorLiteral(red: 0.113947622, green: 0.1140615543, blue: 0.1157705386, alpha: 1).cgColor
+        clipsToBounds = true
         contentMode = .redraw
     }
-
+    override func layoutSubviews() {
+        layer.cornerRadius = bounds.width * Constants.cornerRadiusToBoundsWidth
+    }
     override func draw(_ rect: CGRect) {
         for offset in offsets {
             drawElement(in: firstElement
@@ -88,7 +95,9 @@ class SetCardView: UIView {
                                         y: bounds.isLandscape ? 0 : firstElement.height * offset)))
         }
     }
-
+    static func ==(rhs: SetCardView, lhs: SetCardView) -> Bool {
+        return rhs.features == lhs.features
+    }
     private func drawElement(in rect: CGRect) {
         strokeColor.setStroke()
         fillColor.setFill()
@@ -190,16 +199,5 @@ class SetCardView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
-    }
-}
-extension CGRect {
-    func scaled(to size: CGSize) -> CGRect {
-        return self.applying(CGAffineTransform.identity.scaledBy(x: size.width / width, y: size.height / height))
-    }
-    var isLandscape: Bool {
-        return width > height
-    }
-    func inset(by dxy: CGFloat) -> CGRect {
-        return self.insetBy(dx: dxy, dy: dxy)
     }
 }

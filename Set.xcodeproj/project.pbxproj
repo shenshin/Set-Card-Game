@@ -14,7 +14,7 @@
 		7814AE1D229234D100346673 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7814AE1B229234D100346673 /* LaunchScreen.storyboard */; };
 		7814AE25229245FF00346673 /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE24229245FF00346673 /* SetGame.swift */; };
 		7814AE2B2292484200346673 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE2A2292484200346673 /* Card.swift */; };
-		783BD42022B7472D0045815F /* SetElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783BD41F22B7472D0045815F /* SetElement.swift */; };
+		783BD42022B7472D0045815F /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783BD41F22B7472D0045815F /* Features.swift */; };
 		785D3DF822A465CD0077969B /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DF722A465CD0077969B /* Grid.swift */; };
 		785D3DFC22A4B0200077969B /* GraphicalSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DFB22A4B0200077969B /* GraphicalSetViewController.swift */; };
 		78F0099622AEF78600FAD1D7 /* SetCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099522AEF78600FAD1D7 /* SetCards.swift */; };
@@ -34,12 +34,11 @@
 		7814AE1E229234D100346673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7814AE24229245FF00346673 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		7814AE2A2292484200346673 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		783BD41F22B7472D0045815F /* SetElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetElement.swift; sourceTree = "<group>"; };
+		783BD41F22B7472D0045815F /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
 		785D3DF722A465CD0077969B /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		785D3DFB22A4B0200077969B /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
 		78F0099522AEF78600FAD1D7 /* SetCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCards.swift; sourceTree = "<group>"; };
 		78F0099722AF07E600FAD1D7 /* SetGameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameButton.swift; sourceTree = "<group>"; };
-		882E0452229D38C900B76B61 /* demo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = demo.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8832B011229910450064463A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		888D7559229E99F400FA20C4 /* Combinatorics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combinatorics.swift; sourceTree = "<group>"; };
 		888FA91222B095200038D59A /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
@@ -87,7 +86,7 @@
 		7814AE262292460900346673 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				882E0452229D38C900B76B61 /* demo.playground */,
+				783BD41F22B7472D0045815F /* Features.swift */,
 				7814AE24229245FF00346673 /* SetGame.swift */,
 				7814AE2A2292484200346673 /* Card.swift */,
 				8832B011229910450064463A /* Extensions.swift */,
@@ -119,7 +118,6 @@
 			children = (
 				785D3DF722A465CD0077969B /* Grid.swift */,
 				888FA91222B095200038D59A /* SetCardView.swift */,
-				783BD41F22B7472D0045815F /* SetElement.swift */,
 				78F0099522AEF78600FAD1D7 /* SetCards.swift */,
 				7814AE16229234CB00346673 /* Main.storyboard */,
 				7814AE1B229234D100346673 /* LaunchScreen.storyboard */,
@@ -209,7 +207,7 @@
 				7814AE13229234CB00346673 /* AppDelegate.swift in Sources */,
 				785D3DFC22A4B0200077969B /* GraphicalSetViewController.swift in Sources */,
 				785D3DF822A465CD0077969B /* Grid.swift in Sources */,
-				783BD42022B7472D0045815F /* SetElement.swift in Sources */,
+				783BD42022B7472D0045815F /* Features.swift in Sources */,
 				78F0099822AF07E600FAD1D7 /* SetGameButton.swift in Sources */,
 				7814AE2B2292484200346673 /* Card.swift in Sources */,
 			);

@@ -37,93 +37,61 @@ extension Card: Hashable {
         return lhs.hashValue == rhs.hashValue
     }
     func hash(into hasher: inout Hasher) {
-        hasher.combine(matrix)
+        hasher.combine(features.shape)
+        hasher.combine(features.color)
+        hasher.combine(features.number)
+        hasher.combine(features.shading)
     }
 }
 extension Card: CustomStringConvertible {
     var description: String {
-        return "{\(features)}\n"
+        return "{\(features)}"
     }
 }
 
-struct Features {
-    let shape: Shape
-    let color: Color
-    let number: Number
-    let shading: Shading
-    ///Цифровые значения для параметров. Определяются по значениям для enum Shape
-    static var rawValues: [Int] {
-        return [Shape.oval.rawValue, Shape.squiggle.rawValue, Shape.diamond.rawValue]
-    }
-
-    init(shape: Shape, color: Color, number: Number, shading: Shading) {
-        self.shape = shape
-        self.color = color
-        self.number = number
-        self.shading = shading
-    }
-    init(features: [Int]) {
-        assert({()->Bool in
-            if features.count != 4 {return false}
-            for number in features where !Features.rawValues.contains(number) {return false}
-            return true
-        }(), "incorrect features")
-        self.init(shape: Shape.init(rawValue: features[0])!,
-                  color: Color.init(rawValue: features[1])!,
-                  number: Number.init(rawValue: features[2])!,
-                  shading: Shading.init(rawValue: features[3])!)
-    }
-    enum Shape: Int, CaseIterable {
-        case oval, squiggle, diamond
-    }
-    enum Color: Int, CaseIterable {
-        case red, purple, green
-    }
-    enum Number: Int, CaseIterable {
-        case one, two, three
-    }
-    enum Shading: Int, CaseIterable {
-        case solid, striped, outlined
-    }
-}
+//struct Features {
+//    let shape: Shape
+//    let color: Color
+//    let number: Number
+//    let shading: Shading
+//    ///Цифровые значения для параметров. Определяются по значениям для enum Shape
+//    static var rawValues: [Int] {
+//        return [Shape.oval.rawValue, Shape.squiggle.rawValue, Shape.diamond.rawValue]
+//    }
+//
+//    init(shape: Shape, color: Color, number: Number, shading: Shading) {
+//        self.shape = shape
+//        self.color = color
+//        self.number = number
+//        self.shading = shading
+//    }
+//    init(features: [Int]) {
+//        assert({()->Bool in
+//            if features.count != 4 {return false}
+//            for number in features where !Features.rawValues.contains(number) {return false}
+//            return true
+//        }(), "incorrect features")
+//        self.init(shape: Shape.init(rawValue: features[0])!,
+//                  color: Color.init(rawValue: features[1])!,
+//                  number: Number.init(rawValue: features[2])!,
+//                  shading: Shading.init(rawValue: features[3])!)
+//    }
+//    enum Shape: Int, CaseIterable {
+//        case oval, squiggle, diamond
+//    }
+//    enum Color: Int, CaseIterable {
+//        case red, purple, green
+//    }
+//    enum Number: Int, CaseIterable {
+//        case one, two, three
+//    }
+//    enum Shading: Int, CaseIterable {
+//        case solid, striped, outlined
+//    }
+//}
 
 extension Features: CustomStringConvertible {
     var description: String {
         return "shape: \(shape), color: \(color), number: \(number), shading: \(shading)"
-    }
-}
-
-
-
-
-struct FeaturesCollection {
-    typealias DictionaryType = [Int]
-    
-    // Underlying, private storage, that is the same type of dictionary
-    // that we previously was using at the call site
-    private var features = DictionaryType()
-    
-    // Enable our collection to be initialized with a dictionary
-    init(features: DictionaryType) {
-        self.features = features
-    }
-}
-extension FeaturesCollection: Collection {
-    // Required nested types, that tell Swift what our collection contains
-    typealias Index = DictionaryType.Index
-    typealias Element = DictionaryType.Element
-    
-    // The upper and lower bounds of the collection, used in iterations
-    var startIndex: Index { return features.startIndex }
-    var endIndex: Index { return features.endIndex }
-    
-    // Required subscript, based on a dictionary index
-    subscript(index: Index) -> Iterator.Element {
-        get { return features[index] }
-    }
-    
-    // Method that returns the next index when iterating
-    func index(after i: Index) -> Index {
-        return features.index(after: i)
     }
 }

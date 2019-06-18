@@ -6,7 +6,7 @@
 //  Copyright © 2019 Ales Shenshin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension Array {
     
@@ -50,3 +50,20 @@ extension Array {
     }
 }
 
+extension CGRect {
+    func scaled(to size: CGSize) -> CGRect {
+        return self.applying(CGAffineTransform.identity.scaledBy(x: size.width / width, y: size.height / height))
+    }
+    var isLandscape: Bool {
+        return width > height
+    }
+    func inset(by dxy: CGFloat) -> CGRect {
+        return self.insetBy(dx: dxy, dy: dxy)
+    }
+}
+
+extension Sequence where Element: SetCardView {
+    func contains(_ element: SetCardView) -> Bool {
+        return contains {$0 == element}
+    }
+}

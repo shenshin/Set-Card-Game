@@ -9,26 +9,16 @@
 import UIKit
 
 class SetCards: UIView {
-    var counter = 0
+   
+    var cardViews: [SetCardView] = []
 
-    lazy var cardViews: [SetCardView] = {
-        var labs: [SetCardView] = []
-        for _ in 1...81 {
-            let label = SetCardView()
-            labs.append(label)
-            label.layer.borderWidth = 0.5
-            label.layer.borderColor = UIColor.black.cgColor
-            label.backgroundColor = .gray
-            addSubview(label)
-        }
-        return labs
-    }()
 
     override func layoutSubviews() {
-        //super.layoutSubviews()
-        let grid: Grid = Grid(layout: .dimensions(rowCount: 9, columnCount: 9), frame: bounds)
+        var grid: Grid = Grid(layout: .aspectRatio(bounds.width / bounds.height), frame: bounds)
+        grid.count = cardViews.count
         for index in cardViews.indices {
-            cardViews[index].frame = grid[index]!
+            guard let frame = grid[index] else { fatalError() }//continue }
+            cardViews[index].frame = frame
         }
     }
 }

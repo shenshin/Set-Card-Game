@@ -22,7 +22,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9A5-W8-MUA">
                                 <rect key="frame" x="10" y="54" width="355" height="714"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-gK-iZX" customClass="SetCards" customModule="Set" customModuleProvider="target">
+                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-gK-iZX" customClass="SetCards" customModule="Set" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="605"/>
                                         <color key="backgroundColor" red="0.1137383953" green="0.11371775720000001" blue="0.1176488176" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </view>
@@ -112,9 +112,9 @@
                         <viewLayoutGuide key="safeArea" id="w8i-wt-3h2"/>
                     </view>
                     <connections>
-                        <outlet property="gameRect" destination="hcc-gK-iZX" id="gz0-yg-j99"/>
                         <outlet property="give3MoreCardsButton" destination="EZ0-Go-448" id="L5B-3u-1if"/>
                         <outlet property="scoreLabel" destination="VV7-VA-WBs" id="e1A-Ek-oVd"/>
+                        <outlet property="setCards" destination="hcc-gK-iZX" id="gz0-yg-j99"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bSr-HH-941" userLabel="First Responder" sceneMemberID="firstResponder"/>

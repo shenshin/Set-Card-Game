@@ -10,33 +10,32 @@ import UIKit
 
 class GraphicalSetViewController: UIViewController {
 
-    @IBOutlet weak var gameRect: SetCards!
+    @IBOutlet private weak var setCards: SetCards!
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var give3MoreCardsButton: UIButton!
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
-    //private lazy var setGame: SetGame = SetGame()
-    //private lazy var cardView: SetCardView = {let cv = SetCardView();gameRect.addSubview(cv);return cv}()
+    private lazy var game: SetGame = {
+        var set = SetGame()
+        set.startNewGame()
+        return set
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         startNewGame()
     }
-    //override func viewDidLayoutSubviews() {
-        //let grid = Grid(layout: .fixedCellSize(gameRect.bounds.size), frame: gameRect.bounds)
-        
-        //cardView.frame = gameRect.bounds
-        //gameRect.setNeedsDisplay(); gameRect.setNeedsLayout()//grid[0]!
-    //}
     
-    func startNewGame() {
-        //setGame.startNewGame()
+    internal func startNewGame() {
+        game.startNewGame()
+        setCards.subviews.forEach {$0.removeFromSuperview()}
+        setCards.cardViews.removeAll()
+        
         updateViewsFromModel()
     }
     
-    
     @IBAction private func give3MoreCarsButtonPressed(_ sender: UIButton) {
-        //setGame.get3MoreCards()
+        game.get3MoreCards()
         updateViewsFromModel()
     }
     @IBAction private func startNewGameButtonPressed(_ sender: UIButton) {
@@ -45,12 +44,12 @@ class GraphicalSetViewController: UIViewController {
     var index: Int = 0
     @IBAction private func showHint(_ sender: UIButton) {
         index = index > 2 ? 0 : index
-        for card in gameRect.cardViews {
-            card.features.number = SetCardView.Features.Number.allCases[index]
-        }
+//        for card in gameRect.cardViews {
+//            card.features.number = SetCardView.Features.Number.allCases[index]
+//        }
         index += 1
-//        if setGame.possibleSets > 0 {
-//            setGame.sets.first!.map {setGame.inGame.firstIndex(of: $0)!}.prefix(2).forEach {
+//        if game.possibleSets > 0 {
+//            game.sets.first!.map {game.inGame.firstIndex(of: $0)!}.prefix(2).forEach {
 //                _ = $0 //заглушка
 //            }
 //        }
@@ -61,10 +60,18 @@ class GraphicalSetViewController: UIViewController {
         // приведение кнопки "выдать еще 3 карты" в неактивный режим.
         // кнопка "Give 3 More Cards" нажимается в случаях если колода не пуста и
         //при этом (в игре (на экране) <= 21 карты или последний ход выявил сет)
-        //            give3MoreCardsButton.isEnabled = setGame.deck.count != 0 && ((setGame.inGame.count <= 21) || (setGame.matched != nil && setGame.matched!)) ? true : false
+        //            give3MoreCardsButton.isEnabled = game.deck.count != 0 && ((setGame.inGame.count <= 21) || (setGame.matched != nil && setGame.matched!)) ? true : false
         
         // обновление поля с информацией о возможном кол-ве сетов и о счёте
-        //scoreLabel.text = "Possible sets: \(setGame.possibleSets)    Score: \(setGame.score)"
- 
+        //scoreLabel.text = "Possible sets: \(game.possibleSets)    Score: \(game.score)"
+   
+        for card in game.inGame {
+            
+            let cardView = SetCardView(shape: card.features.shape, color: card.features.color, number: card.features.number, shading: card.features.shading)
+            if !setCards.cardViews.contains(cardView) {
+                setCards.addSubview(cardView)
+                setCards.cardViews.append(cardView)
+            }
+        }
     }
 }
