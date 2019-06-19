@@ -39,7 +39,8 @@ class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
     @IBAction func rotationGestureRecognixed(_ sender: UIRotationGestureRecognizer) {
         switch sender.state {
         case .ended:
-            print("rotation recognized")
+            cardsScreen.cardViews.shuffle()
+            updateViewsFromModel()
         default:
             break
         }
