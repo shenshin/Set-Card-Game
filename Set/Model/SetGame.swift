@@ -9,15 +9,17 @@
 import Foundation
 
 struct SetGame {
-    ///Карты, которые ещё не разыгрывались
+    /// Карты, которые ещё не разыгрывались
     private(set) var deck: [Card] = []
-    ///Карты, которые находятся в данный момент в игре, и из них производится выбор
+    /// Карты, которые находятся в данный момент в игре, и из них производится выбор
     private(set) var inGame: [Card] = []
-    ///Карты, выбранные, но пока не угаданные как сет
-    private(set) var chosen: [Card] = []
-    ///Был ли угадан сет в предыдущем ходе?
+    /// Карты, выбранные, но пока не угаданные как сет
+    private(set) var selected: [Card] = []
+    /// Карты, уже выбывшие из игры, то есть угаданные на предыдущих ходах
+    private(set) var dropout: [Card] = []
+    /// Был ли угадан сет в предыдущем ходе?
     var matched: Bool? {
-        return chosen.count == 3 ? isASet(chosen) ? true : false : nil
+        return selected.count == 3 ? isASet(selected) ? true : false : nil
     }
     private(set) var score: Int = 0
     /// Коллекция 3-карточных массивов, составляющих сет на данный момент игры
@@ -32,61 +34,62 @@ struct SetGame {
     mutating func startNewGame() {
         resetDeck()
         inGame.removeAll()
-        chosen.removeAll()
+        selected.removeAll()
         score = 0
         inGame = deck.extractLast(12)!
     }
 
-    ///Вынимает очередные 3 карты из колоды `deck[]` и помещает их в игру `inGame[]`
-    ///- Returns: `true` если удалось поместить 3 новые карты в `inGame[]` и `false` если этого сделать не удалось
+    /// Вынимает очередные 3 карты из колоды `deck[]` и помещает их в игру `inGame[]`
+    /// - Returns: `true` если удалось поместить 3 новые карты в `inGame[]` и `false` если этого сделать не удалось
     mutating func get3MoreCards() {
         if let array = deck.extractLast(3) {
             inGame.append(contentsOf: array)
             updateModel()
         }
     }
-    ///Принимает по одной карте, выбираемые пользователем и формирует модель игры.
-    ///Если в параметре передаётся `nil`, то метод только обнуляет выбранные
-    ///на данный момент карты и, при удачно угаданном сете, удаляет выбранные карты
-    ///из игры.
-    ///- Parameter optionalCard: Новая карта, передаваемая модели на обработку, либо
-    ///`nil` если требуется просто обновить состояние модели, например,
-    ///после удачно или неудачно угаданного сета.
+    /// Принимает по одной карте, выбираемые пользователем и формирует модель игры.
+    /// Если в параметре передаётся `nil`, то метод только обнуляет выбранные
+    /// на данный момент карты и, при удачно угаданном сете, удаляет выбранные карты
+    /// из игры.
+    /// - Parameter optionalCard: Новая карта, передаваемая модели на обработку, либо
+    /// `nil` если требуется просто обновить состояние модели, например,
+    /// после удачно или неудачно угаданного сета.
     mutating func updateModel(_ optionalCard: Card? = nil) {
-        assert(chosen.count <= 3, "The ammount of chosen cards is greater than possible")
+        assert(selected.count <= 3, "The ammount of chosen cards is greater than possible")
         //если метод в аргументе получает карту
         if let card = optionalCard {
             //в предыдущем ходе не было попытки угадать сет
             if matched == nil {
                 //если карта уже выбрана, удалить ее из выбранных
-                if chosen.contains(card) {
-                    chosen.removeAll { $0 == card }
+                if selected.contains(card) {
+                    selected.removeAll { $0 == card }
                     score -= 1 // штраф за снятие выбора с карты
                 //а если не была выбрана, то добавить в выбранные
                 } else {
-                    chosen.append(card)
-                    if chosen.count == 3 {
-                        score += isASet(chosen) ? 3 : -5 //начисление очков в счёт
+                    selected.append(card)
+                    if selected.count == 3 {
+                        score += isASet(selected) ? 3 : -5 //начисление очков в счёт
                     }
                 }
             //в предыдущем ходе был угадан сет
             } else if matched! {
-                let temp = chosen
+                dropout.append(contentsOf: selected) //удаляемые из игры карты поместить в "выбывшие"
+                let temp = selected
                 //из игры удаляются выбранные карты
-                //inGame = inGame.filter {!chosen.contains($0)}
-                chosen.forEach { match in inGame.removeAll { $0 == match } }
-                chosen.removeAll()
+                selected.forEach { match in inGame.removeAll { $0 == match } }
+                selected.removeAll()
+                
                 //если при вызове метода была передана новая карта, не входящая
                 //в уже угаданный сет, то она добавляется во вновь выбранные карты
                 //после их предшествующего обнуления
                 if !temp.contains(card) {
-                    chosen.append(card)
+                    selected.append(card)
                 }
             //если в предыдущем ходе карты не составили сет, то обнулить выбранные
             //карты и добавить переданную карту в выбранные
             } else {
-                chosen.removeAll()
-                chosen.append(card)
+                selected.removeAll()
+                selected.append(card)
             }
         //Если в аргументе функции не была передана карта
         } else {
@@ -94,22 +97,23 @@ struct SetGame {
             //выбранной карты, то удалить удачно угаданные карты из игры
             if let match = matched {
                 if match {
-                    chosen.forEach { match in inGame.removeAll { $0 == match } }
-                    chosen.removeAll()
+                    dropout.append(contentsOf: selected) //удаляемые из игры карты поместить в "выбывшие"
+                    selected.forEach { match in inGame.removeAll { $0 == match } }
+                    selected.removeAll()
                 } else {
-                    chosen.removeAll()
+                    selected.removeAll()
                 }
             }
         }
     }
 
-    ///Проверяет, являются ли карты `cards` сетом
 //    func isASet(_ cards: [Card]) -> Bool {
 //        assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
 //        return cards.reduce(into: true) { (result, card) in
 //            //card.features.forEach()
 //        }
 //    }
+    /// Проверяет, являются ли карты `cards` сетом
     func isASet(_ cards: [Card]) -> Bool {
         assert(cards.count == 3, "set should consist of 3 cards")
         var matched = false
@@ -133,7 +137,12 @@ struct SetGame {
 
     private mutating func resetDeck() {
         deck.removeAll()
-        deck = Combinatorics.permutationsWithRepetitionFrom(Features.rawValues, taking: 4).map{Card($0)}
+        deck = Combinatorics.permutationsWithRepetitionFrom(Features.rawValues, taking: 4).map {
+            Card(shape: Features.Shape(rawValue: $0[0])!,
+                 color: Features.Color(rawValue: $0[1])!,
+                 number: Features.Number(rawValue: $0[2])!,
+                 shading: Features.Shading(rawValue: $0[3])!)
+        }
         deck.shuffle()
     }
 

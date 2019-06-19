@@ -17,7 +17,7 @@
 		783BD42022B7472D0045815F /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783BD41F22B7472D0045815F /* Features.swift */; };
 		785D3DF822A465CD0077969B /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DF722A465CD0077969B /* Grid.swift */; };
 		785D3DFC22A4B0200077969B /* GraphicalSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D3DFB22A4B0200077969B /* GraphicalSetViewController.swift */; };
-		78F0099622AEF78600FAD1D7 /* SetCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099522AEF78600FAD1D7 /* SetCards.swift */; };
+		78F0099622AEF78600FAD1D7 /* SetCardsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099522AEF78600FAD1D7 /* SetCardsScreen.swift */; };
 		78F0099822AF07E600FAD1D7 /* SetGameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0099722AF07E600FAD1D7 /* SetGameButton.swift */; };
 		8832B012229910450064463A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832B011229910450064463A /* Extensions.swift */; };
 		888D755A229E99F400FA20C4 /* Combinatorics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888D7559229E99F400FA20C4 /* Combinatorics.swift */; };
@@ -37,7 +37,7 @@
 		783BD41F22B7472D0045815F /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
 		785D3DF722A465CD0077969B /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		785D3DFB22A4B0200077969B /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
-		78F0099522AEF78600FAD1D7 /* SetCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCards.swift; sourceTree = "<group>"; };
+		78F0099522AEF78600FAD1D7 /* SetCardsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardsScreen.swift; sourceTree = "<group>"; };
 		78F0099722AF07E600FAD1D7 /* SetGameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameButton.swift; sourceTree = "<group>"; };
 		8832B011229910450064463A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		888D7559229E99F400FA20C4 /* Combinatorics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combinatorics.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 			children = (
 				785D3DF722A465CD0077969B /* Grid.swift */,
 				888FA91222B095200038D59A /* SetCardView.swift */,
-				78F0099522AEF78600FAD1D7 /* SetCards.swift */,
+				78F0099522AEF78600FAD1D7 /* SetCardsScreen.swift */,
 				7814AE16229234CB00346673 /* Main.storyboard */,
 				7814AE1B229234D100346673 /* LaunchScreen.storyboard */,
 				78F0099722AF07E600FAD1D7 /* SetGameButton.swift */,
@@ -203,7 +203,7 @@
 				7814AE15229234CB00346673 /* EmojiSetViewController.swift in Sources */,
 				7814AE25229245FF00346673 /* SetGame.swift in Sources */,
 				888D755A229E99F400FA20C4 /* Combinatorics.swift in Sources */,
-				78F0099622AEF78600FAD1D7 /* SetCards.swift in Sources */,
+				78F0099622AEF78600FAD1D7 /* SetCardsScreen.swift in Sources */,
 				7814AE13229234CB00346673 /* AppDelegate.swift in Sources */,
 				785D3DFC22A4B0200077969B /* GraphicalSetViewController.swift in Sources */,
 				785D3DF822A465CD0077969B /* Grid.swift in Sources */,
@@ -359,6 +359,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;
@@ -378,6 +379,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZSCD3BWGW9;
 				INFOPLIST_FILE = Set/Info.plist;

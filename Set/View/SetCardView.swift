@@ -29,12 +29,12 @@ fileprivate struct Constants {
 }
 
 protocol SetCardViewDelegate: class {
-    func cardTapped(_ card: SetCardView)
+    func cardTapped(_ cardView: SetCardView)
 }
 
 class SetCardView: UIView {
     
-    var features: Features = Features() {didSet{setNeedsLayout();setNeedsDisplay()}}
+    private(set) var features: Features = Features() //{didSet{setNeedsLayout();setNeedsDisplay()}}
     
     weak var delegate: SetCardViewDelegate?
 
@@ -95,7 +95,7 @@ class SetCardView: UIView {
         case .ended:
             delegate?.cardTapped(self)
         default:
-            print("recognized some state")
+            break
         }
     }
     static func ==(rhs: SetCardView, lhs: SetCardView) -> Bool {

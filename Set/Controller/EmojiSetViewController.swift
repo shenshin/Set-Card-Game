@@ -65,13 +65,13 @@ class EmojiSetViewController: UIViewController {
                     let card = setGame.inGame[index]
                     button.setAttributedTitle(drawSymbol(shape: card.features.shape, color: card.features.color, number: card.features.number, shading: card.features.shading), for: .normal)
                     if let matched = setGame.matched {
-                        if setGame.chosen.contains(card) && matched {
+                        if setGame.selected.contains(card) && matched {
                             button.backgroundColor = #colorLiteral(red: 0.8394593306, green: 1, blue: 0.8707115997, alpha: 1)
-                        } else if setGame.chosen.contains(card) && !matched {
+                        } else if setGame.selected.contains(card) && !matched {
                             button.backgroundColor = #colorLiteral(red: 0.9879103513, green: 0.8457199425, blue: 0.916779121, alpha: 1)
                         }
                     } else {
-                        if setGame.chosen.contains(card) {
+                        if setGame.selected.contains(card) {
                             button.backgroundColor = #colorLiteral(red: 1, green: 0.960983851, blue: 0.8528137015, alpha: 1)
                         }
                     }

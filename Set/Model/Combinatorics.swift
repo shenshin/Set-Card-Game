@@ -16,8 +16,8 @@ public struct Combinatorics {
     /// Given an array of elements and how many of them we are taking, returns an array with all possible permutations
     /// without repetition. Please note that as repetition is not allowed, taking must always be less or equal to
     /// `elements.count`.
-    /// Almost by convention, if `taking` is 0, the function will return [[]] (an array with only one possible permutation
-    /// - a permutation with no elements). In a different scenario, if `taking` is bigger than `elements.count` the function
+    /// Almost by convention, if `taking` is 0, the function will return [[]] (an array with only one possible permutation -
+    /// a permutation with no elements). In a different scenario, if `taking` is bigger than `elements.count` the function
     /// will return [] (an empty array, so including no permutation at all).
     ///
     /// - Parameters:
