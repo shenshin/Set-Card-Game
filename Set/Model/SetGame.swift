@@ -35,6 +35,7 @@ struct SetGame {
         resetDeck()
         inGame.removeAll()
         selected.removeAll()
+        dropout.removeAll()
         score = 0
         inGame = deck.extractLast(12)!
     }
