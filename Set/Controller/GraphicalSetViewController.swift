@@ -10,7 +10,7 @@ import UIKit
 
 class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
 
-    @IBOutlet private weak var setCards: SetCardsScreen!
+    @IBOutlet private weak var cardsScreen: SetCardsScreen!
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private weak var give3MoreCardsButton: UIButton!
     @IBOutlet weak var hintButton: SetGameButton!
@@ -44,42 +44,38 @@ class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
             break
         }
     }
-    
     @IBAction private func give3MoreCarsButtonPressed(_ sender: UIButton) {
         dealThreeMoreCards()
     }
     @IBAction private func startNewGameButtonPressed(_ sender: UIButton) {
         startNewGame()
     }
-
     @IBAction private func showHint(_ sender: UIButton) {
         if let firstSet = game.sets.first {
             firstSet.prefix(2).forEach {
-                setCards.markCard($0, as: .hint)
+                cardsScreen.markCard(with: $0.features, as: .hint)
             }
         }
     }
-    internal func cardTapped(_ cardView: SetCardView) {
-        let card = cardFromView(cardView)
+
+    func cardTapped(with features: Features) {
+        let card = Card(shape: features.shape, color: features.color, number: features.number, shading: features.shading)
         game.updateModel(card)
         updateViewsFromModel()
     }
-    internal func startNewGame() {
+    func startNewGame() {
         game.startNewGame()
-        setCards.subviews.forEach {$0.removeFromSuperview()}
-        setCards.cardViews.removeAll()
+        cardsScreen.subviews.forEach {$0.removeFromSuperview()}
+        cardsScreen.cardViews.removeAll()
     
         updateViewsFromModel()
     }
-    private func cardFromView(_ view: SetCardView) -> Card {
-        return Card(shape: view.features.shape, color: view.features.color, number: view.features.number, shading: view.features.shading)
-    }
-    private func dealThreeMoreCards() {
+
+    func dealThreeMoreCards() {
         game.get3MoreCards()
         updateViewsFromModel()
     }
     private func updateViewsFromModel() {
-        
         // приведение кнопки "выдать еще 3 карты" в неактивный режим.
         // кнопка "Give 3 More Cards" нажимается в случаях если колода не пуста и
         //при этом (в игре (на экране) <= 78 карты или последний ход выявил сет)
@@ -91,14 +87,14 @@ class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
         scoreLabel.text = "Possible sets: \(game.possibleSets)    Score: \(game.score)"
         // Угаданные ранее карты удаляются с экрана
         for removedCard in game.dropout {
-            setCards.removeCardFromSuperView(removedCard)
+            cardsScreen.removeCardFromSuperView(with: removedCard.features)
         }
         // Каждая карта, находящаясь в игре выводится на экран и оформляется в завсимости от обстановки
         for card in game.inGame {
-            setCards.markCard(card, as: .normal) // сбросить ранее установленные оформления
+            cardsScreen.markCard(with: card.features, as: .normal) // сбросить ранее установленные оформления
             // Если карты ещё не находится на экране, то создать для неё распознаватель нажатия
             // и добавить на экран
-            if let cardView = setCards.addCardToView(card) {
+            if let cardView = cardsScreen.addCardToView(with: card.features) {
                 let tapGR = UITapGestureRecognizer(target: cardView, action: #selector(SetCardView.tapRecognizedOnCard(by:)))
                 tapGR.numberOfTapsRequired = 1
                 tapGR.numberOfTouchesRequired = 1
@@ -114,16 +110,16 @@ class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
             if let matched = game.matched {
                 // Если нажатая карта находится в списке выбранных и сет угадан:
                 if game.selected.contains(card) && matched {
-                    setCards.markCard(card, as: .set)
+                    cardsScreen.markCard(with: card.features, as: .set)
                 // Если карта находится в выбранных и сет не угадан
                 } else if game.selected.contains(card) && !matched {
-                    setCards.markCard(card, as: .nonSet)
+                    cardsScreen.markCard(with: card.features, as: .nonSet)
                 }
             // Если попытки угадать сет не производится (не выбрано ещё три карты, то отметить
             // текущую карту как отмеченную
             } else {
                 if game.selected.contains(card) {
-                    setCards.markCard(card, as: .selected)
+                    cardsScreen.markCard(with: card.features, as: .selected)
                 }
             }
         }

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gLI-Ph-T4Z">
-    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -14,14 +12,14 @@
             <objects>
                 <viewController storyboardIdentifier="CardViewController" id="gLI-Ph-T4Z" customClass="GraphicalSetViewController" customModule="Set" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IpM-Kq-gb9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9A5-W8-MUA">
-                                <rect key="frame" x="10" y="54" width="394" height="798"/>
+                                <rect key="frame" x="10" y="10" width="580" height="580"/>
                                 <subviews>
                                     <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-gK-iZX" customClass="SetCardsScreen" customModule="Set" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="677"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="580" height="490.5"/>
                                         <color key="backgroundColor" red="0.1137383953" green="0.11371775720000001" blue="0.1176488176" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -30,13 +28,13 @@
                                         </connections>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MUl-95-c7E">
-                                        <rect key="frame" x="0.0" y="685" width="394" height="113"/>
+                                        <rect key="frame" x="0.0" y="498.5" width="580" height="81.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gwF-wb-f0c">
-                                                <rect key="frame" x="0.0" y="0.0" width="394" height="52.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="580" height="36.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZ0-Go-448" customClass="SetGameButton" customModule="Set" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="289.66666666666669" height="52.666666666666664"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="429" height="36.5"/>
                                                         <color key="backgroundColor" red="0.40001454949999998" green="0.39998903870000002" blue="0.40392354130000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <state key="normal" title="Deal 3 more cards">
@@ -47,7 +45,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3s-0K-hEI" customClass="SetGameButton" customModule="Set" customModuleProvider="target">
-                                                        <rect key="frame" x="297.66666666666669" y="0.0" width="96.333333333333314" height="52.666666666666664"/>
+                                                        <rect key="frame" x="437" y="0.0" width="143" height="36.5"/>
                                                         <color key="backgroundColor" red="0.40002644059999998" green="0.39998322730000002" blue="0.40784680839999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <state key="normal" title="Hint">
@@ -63,10 +61,10 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="K4c-0k-6CI">
-                                                <rect key="frame" x="0.0" y="60.666666666666629" width="394" height="52.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="580" height="37"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tJ-8H-jgc" customClass="SetGameButton" customModule="Set" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="193" height="52.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="286" height="37"/>
                                                         <color key="backgroundColor" red="0.39601963759999997" green="0.39998888970000002" blue="0.40392380950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <state key="normal" title="Start new game">
@@ -77,7 +75,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VV7-VA-WBs">
-                                                        <rect key="frame" x="201" y="0.0" width="193" height="52.333333333333336"/>
+                                                        <rect key="frame" x="294" y="0.0" width="286" height="37"/>
                                                         <color key="backgroundColor" red="0.219633311" green="0.21959310770000001" blue="0.22745442390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <color key="textColor" red="0.86674529310000004" green="0.86273485419999996" blue="0.86274546379999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -115,10 +113,10 @@
                         <viewLayoutGuide key="safeArea" id="w8i-wt-3h2"/>
                     </view>
                     <connections>
+                        <outlet property="cardsScreen" destination="hcc-gK-iZX" id="gz0-yg-j99"/>
                         <outlet property="give3MoreCardsButton" destination="EZ0-Go-448" id="L5B-3u-1if"/>
                         <outlet property="hintButton" destination="u3s-0K-hEI" id="SjQ-yE-ZRR"/>
                         <outlet property="scoreLabel" destination="VV7-VA-WBs" id="e1A-Ek-oVd"/>
-                        <outlet property="setCards" destination="hcc-gK-iZX" id="gz0-yg-j99"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bSr-HH-941" userLabel="First Responder" sceneMemberID="firstResponder"/>

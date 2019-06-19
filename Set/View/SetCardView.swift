@@ -29,7 +29,7 @@ fileprivate struct Constants {
 }
 
 protocol SetCardViewDelegate: class {
-    func cardTapped(_ cardView: SetCardView)
+    func cardTapped(with features: Features)
 }
 
 class SetCardView: UIView {
@@ -93,7 +93,7 @@ class SetCardView: UIView {
     @objc func tapRecognizedOnCard(by recognizer: UITapGestureRecognizer) {
         switch recognizer.state {
         case .ended:
-            delegate?.cardTapped(self)
+            delegate?.cardTapped(with: features)
         default:
             break
         }

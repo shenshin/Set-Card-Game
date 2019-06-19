@@ -22,14 +22,14 @@ class SetCardsScreen: UIView {
             cardViews[index].frame = frame
         }
     }
-    /// Возвращает графическое отображение карты соответствующее карте из модели
-    private func cardToView(_ card: Card) -> SetCardView {
-        return SetCardView(shape: card.features.shape, color: card.features.color, number: card.features.number, shading: card.features.shading)
+    /// Возвращает графическое отображение карты соответствующее параметрам модели
+    private func getView(from features: Features) -> SetCardView {
+        return SetCardView(shape: features.shape, color: features.color, number: features.number, shading: features.shading)
     }
     /// Возвращает конкретную карту из отображённых в данный момент, соответствующую карте с заданными параметрами из модели,
     /// если, конечно, она там есть, а если нет, то возвращает `nil`
-    private func viewFromCard(_ card: Card) -> SetCardView? {
-        let cardView = cardToView(card)
+    private func getDisplayedView(from features: Features) -> SetCardView? {
+        let cardView = getView(from: features)
         if let view = cardViews.first(where: {$0 == cardView}) {
             return view
         } else {
@@ -37,8 +37,8 @@ class SetCardsScreen: UIView {
         }
     }
     /// Добавляет карту на экран при условии, что её там ещё нет, и возвращает ссылку на добавленную карту
-    func addCardToView(_ card: Card) -> SetCardView? {
-        let view = cardToView(card)
+    func addCardToView(with features: Features) -> SetCardView? {
+        let view = getView(from: features)
         if !cardViews.contains(view) {
             cardViews.append(view)
             addSubview(view)
@@ -48,7 +48,7 @@ class SetCardsScreen: UIView {
         }
     }
     /// Изменяет статус (оформление) карты на экране, соответствующей карте из модели
-    func markCard(_ card: Card, as state: CardState) {
+    func markCard(with features: Features, as state: CardState) {
         var bgColor: UIColor
         switch state {
         case .normal:
@@ -62,11 +62,11 @@ class SetCardsScreen: UIView {
         case .hint:
             bgColor = #colorLiteral(red: 0.6551629901, green: 0.8148941398, blue: 0.8421137929, alpha: 1)
         }
-        viewFromCard(card)?.backgroundColor = bgColor
+        getDisplayedView(from: features)?.backgroundColor = bgColor
     }
     /// Удаляет с экрана карту, соответствующую данной карте из модели
-    func removeCardFromSuperView(_ card: Card) {
-        if let view = viewFromCard(card) {
+    func removeCardFromSuperView(with features: Features) {
+        if let view = getDisplayedView(from: features) {
             view.removeFromSuperview()
             cardViews.removeAll(where: {$0 == view})
         }
