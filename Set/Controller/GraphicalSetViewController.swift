@@ -76,7 +76,20 @@ class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
         game.get3MoreCards()
         updateViewsFromModel()
     }
+    func showGameOverAllert() {
+        let alert = UIAlertController(title: "Game Over", message: "There are no more possible sets in the game. Your final score is \(game.score)", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Start new game",
+                                      style: UIAlertAction.Style.default,
+                                      handler: {(_: UIAlertAction!) in
+                                        self.startNewGame()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     private func updateViewsFromModel() {
+        if game.deck.count == 0 && game.possibleSets == 0 {
+            showGameOverAllert()
+        }
         // приведение кнопки "выдать еще 3 карты" в неактивный режим.
         // кнопка "Give 3 More Cards" нажимается в случаях если колода не пуста и
         //при этом (в игре (на экране) <= 78 карты или последний ход выявил сет)

@@ -24,10 +24,7 @@ extension Card: Hashable {
         return lhs.hashValue == rhs.hashValue
     }
     func hash(into hasher: inout Hasher) {
-        hasher.combine(features.shape)
-        hasher.combine(features.color)
-        hasher.combine(features.number)
-        hasher.combine(features.shading)
+        hasher.combine(features)
     }
 }
 extension Card: CustomStringConvertible {
