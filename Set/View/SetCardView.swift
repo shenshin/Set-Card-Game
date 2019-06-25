@@ -28,15 +28,9 @@ fileprivate struct Constants {
     static let cornerRadiusToBoundsWidth: CGFloat = 1/8
 }
 
-protocol SetCardViewDelegate: class {
-    func cardTapped(with features: Features)
-}
-
 class SetCardView: UIView {
     
     private(set) var features: Features = Features() //{didSet{setNeedsLayout();setNeedsDisplay()}}
-    
-    weak var delegate: SetCardViewDelegate?
 
     private var strokeColor: UIColor {
         switch features.color {
@@ -88,14 +82,6 @@ class SetCardView: UIView {
             drawElement(in: firstElement
             .applying(CGAffineTransform(translationX: bounds.isLandscape ? firstElement.width * offset : 0,
                                         y: bounds.isLandscape ? 0 : firstElement.height * offset)))
-        }
-    }
-    @objc func tapRecognizedOnCard(by recognizer: UITapGestureRecognizer) {
-        switch recognizer.state {
-        case .ended:
-            delegate?.cardTapped(with: features)
-        default:
-            break
         }
     }
     static func ==(rhs: SetCardView, lhs: SetCardView) -> Bool {
@@ -191,9 +177,13 @@ class SetCardView: UIView {
     // находящихся в методе setupView, вызываемом из init-ов
     
     /// Задание всех атрибутов карты при создании вида
-    convenience init(shape: Features.Shape, color: Features.Color, number: Features.Number, shading: Features.Shading) {
+//    convenience init(shape: Features.Shape, color: Features.Color, number: Features.Number, shading: Features.Shading) {
+//        self.init(frame: CGRect.zero)
+//        self.features = Features(shape: shape, color: color, number: number, shading: shading)
+//    }
+    convenience init(_ features: Features) {
         self.init(frame: CGRect.zero)
-        self.features = Features(shape: shape, color: color, number: number, shading: shading)
+        self.features = features
     }
     override init(frame: CGRect) {
         super.init(frame: frame)

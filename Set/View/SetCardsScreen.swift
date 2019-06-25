@@ -7,24 +7,40 @@
 //
 
 import UIKit
-
+typealias VoidFunc = ()->Void
 class SetCardsScreen: UIView {
     enum CardState {
         case normal, selected, set, nonSet, hint
     }
-    var cardViews: [SetCardView] = [] { didSet { setNeedsLayout() } }
-
+    var cardViews: [SetCardView] = [] {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    private lazy var animator = UIDynamicAnimator(referenceView: self)
+    private lazy var collider = UIGravityBehavior()
+    
     override func layoutSubviews() {
         var grid: Grid = Grid(layout: .aspectRatio(bounds.width / bounds.height), frame: bounds)
         grid.count = cardViews.count
         for index in cardViews.indices {
             guard let frame = grid[index] else { continue }
-            cardViews[index].frame = frame
+            let card = cardViews[index]
+//            UIView.transition(with: card, duration: 1, options: .transitionFlipFromLeft, animations: {card.frame = frame}, completion: nil)
+//            collider.addItem(card)
+            animateViewsLayout {
+
+                card.frame = frame
+            }
+            
         }
+    }
+    private func animateViewsLayout(_ animation: @escaping VoidFunc) {
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: animation, completion: nil)
     }
     /// Возвращает графическое отображение карты соответствующее параметрам модели
     private func getView(from features: Features) -> SetCardView {
-        return SetCardView(shape: features.shape, color: features.color, number: features.number, shading: features.shading)
+        return SetCardView(features)
     }
     /// Возвращает конкретную карту из отображённых в данный момент, соответствующую карте с заданными параметрами из модели,
     /// если, конечно, она там есть, а если нет, то возвращает `nil`

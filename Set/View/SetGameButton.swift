@@ -12,7 +12,6 @@ class SetGameButton: UIButton {
 // кнопки снизу игрового экрана. можно добавить сюда какую-то кастомизацию, например скруглить их углы
     override func layoutSubviews() {
         super.layoutSubviews()
-        let buttonCornerRadius = bounds.height / 7
-        layer.cornerRadius = buttonCornerRadius
+        layer.cornerRadius = bounds.height / 7
     }
 }

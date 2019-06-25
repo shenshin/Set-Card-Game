@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
+class GraphicalSetViewController: UIViewController {
 
     @IBOutlet private weak var cardsScreen: SetCardsScreen!
     @IBOutlet private weak var scoreLabel: UILabel!
@@ -58,11 +58,16 @@ class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
             }
         }
     }
-
-    func cardTapped(with features: Features) {
-        let card = Card(shape: features.shape, color: features.color, number: features.number, shading: features.shading)
-        game.updateModel(card)
-        updateViewsFromModel()
+    @objc func cardViewTapped(_ recognizer: UITapGestureRecognizer){
+        switch recognizer.state {
+        case .ended:
+            if let cardView = recognizer.view as? SetCardView {
+                game.updateModel(Card(cardView.features))
+                updateViewsFromModel()
+            }
+        default:
+            break
+        }
     }
     func startNewGame() {
         game.startNewGame()
@@ -109,16 +114,10 @@ class GraphicalSetViewController: UIViewController, SetCardViewDelegate {
             // Если карты ещё не находится на экране, то создать для неё распознаватель нажатия
             // и добавить на экран
             if let cardView = cardsScreen.addCardToView(with: card.features) {
-                let tapGR = UITapGestureRecognizer(target: cardView, action: #selector(SetCardView.tapRecognizedOnCard(by:)))
+                let tapGR = UITapGestureRecognizer(target: self, action: #selector(cardViewTapped(_:)))
                 tapGR.numberOfTapsRequired = 1
                 tapGR.numberOfTouchesRequired = 1
                 cardView.addGestureRecognizer(tapGR)
-                // Назначить view controller делегатом добавленной карты для того, чтобы метод,
-                // обрабатывающий нажатие по карте, находящийся внутри карты, мог сообщить
-                // контроллеру, какая именно карта была нажата, передав ссылку на эту карту в
-                // метод `func cardTapped(_ cardView: SetCardView)`, который реализован в этом
-                // контроллере согласно протоколу SetCardViewDelegate, на который он подписан
-                cardView.delegate = self
             }
             // Если в текущем ходе производится попытка угадать сет
             if let matched = game.matched {

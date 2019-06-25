@@ -28,7 +28,7 @@ struct SetGame {
     }
     /// Количество возможных сетов среди карт, находящихся в игре
     var possibleSets: Int {
-        return inGame.combinations(taking: 3).reduce(into: 0){$0 += isASet($1) ? 1 : 0}
+        return inGame.combinations(taking: 3).reduce(into: 0){$0 += self.isASet($1) ? 1 : 0}
     }
     /// Сбрасывает все параметры для начала новой игры
     mutating func startNewGame() {
@@ -108,12 +108,6 @@ struct SetGame {
         }
     }
 
-//    func isASet(_ cards: [Card]) -> Bool {
-//        assert(cards.count == 3, "set (\(cards)) should consist of 3 cards")
-//        return cards.reduce(into: true) { (result, card) in
-//            //card.features.forEach()
-//        }
-//    }
     /// Проверяет, являются ли карты `cards` сетом
     func isASet(_ cards: [Card]) -> Bool {
         assert(cards.count == 3, "set should consist of 3 cards")

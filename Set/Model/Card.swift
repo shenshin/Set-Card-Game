@@ -18,6 +18,9 @@ struct Card {
     init(shape: Features.Shape, color: Features.Color, number: Features.Number, shading: Features.Shading) {
         self.features = Features(shape: shape, color: color, number: number, shading: shading)
     }
+    init(_ features: Features) {
+        self.features = features
+    }
 }
 extension Card: Hashable {
     static func == (lhs: Card, rhs: Card) -> Bool {
